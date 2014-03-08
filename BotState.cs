@@ -15,9 +15,16 @@ namespace TweakBot
         // settings opponent_bot -b : The name of your opponent bot is given.
         private String opponentName;
 
-        private List<Region> regions;
-        private List<SuperRegion> superRegions;
+        // Map, SuperRegions, Regions
+        private Map myMap;
 
+
+        public BotState()
+        {
+            myMap = new Map();
+        }
+
+        
         public void setup_map(String[] parts)
         {
             switch (parts[1])

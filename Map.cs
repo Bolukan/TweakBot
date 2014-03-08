@@ -50,8 +50,17 @@ namespace TweakBot
             // quick
             if (superRegions[id-1].getId() == id) return superRegions[id-1];
             // search
-            SuperRegion superRegion = superRegions.Find(x => x.getId()==id);
+            return superRegions.Find(x => x.getId()==id);
         }
+
+        public Region Region(int id)
+        {
+            // quick
+            if (regions[id - 1].getId() == id) return regions[id - 1];
+            // search
+            return regions.Find(x => x.getId() == id);
+        }
+
 
 
     }
