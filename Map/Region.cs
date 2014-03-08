@@ -24,7 +24,7 @@ namespace TweakBot
             this.superRegion = superRegion;
             this.neighbours = new List<Region>();
             this.armies = 0;
-            this.playerName = "Unknown";
+            this.playerName = Map.GetInstance().getName(0);
         }
 
         public void AddNeighbour(Region neighbour)

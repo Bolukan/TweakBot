@@ -125,6 +125,16 @@ namespace TweakBot
             names[2] = name;
         }
 
+        // calculate further map statistics
+        public void CalculateMap()
+        {
 
+        }
+
+        public String getName(int id)
+        {
+            if (id < 0 | id > 2) return "";
+            return names[id];
+        }
     }
 }

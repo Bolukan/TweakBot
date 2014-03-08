@@ -30,6 +30,12 @@ namespace TweakBot
                     }
                     break;
 
+
+                case "pick_starting_regions":
+                    Map.GetInstance().CalculateMap();
+                    break;
+                    
+              
                 // setup_map
                 case "setup_map":
                     switch (parts[1].ToLowerInvariant())

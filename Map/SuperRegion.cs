@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace TweakBot
 {
@@ -8,6 +9,8 @@ namespace TweakBot
         private int id;
         private int armiesReward;
         private List<Region> regions;
+
+        private List<Region> neighbours; // neighbours from regions but not own regions
 
         /// <summary>
         /// setup_map super_regions
@@ -58,6 +61,12 @@ namespace TweakBot
         public List<Region> getRegions()
         { 
             return this.regions; 
+        }
+
+        public void Calculate()
+        {
+            List<Region> AllNeighbours = regions.SelectMany(r => r.getNeighbours()).ToList();
+            neighbours = AllNeighbours.Distinct().Except(regions).ToList();
         }
 
     }
