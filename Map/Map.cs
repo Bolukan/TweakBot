@@ -10,6 +10,8 @@ namespace TweakBot
         /// </summary>
         private static Map instance;
 
+        private static int[] Favorites;
+
         /// <summary>
         /// give static self
         /// </summary>
@@ -37,6 +39,14 @@ namespace TweakBot
             superRegions = new List<SuperRegion>();
             names = new String[3];
             names[0] = "neutral";
+
+            Favorites = new int[] {
+                39, 40, 41, 42, 
+                12, 10, 11, 13, 
+                23, 21, 22, 24, 25, 26,
+                20, 17, 18, 19, 15, 16, 14,
+                5, 9, 3, 2, 4, 7, 8, 1, 6,
+                38, 36, 33, 30, 32, 27, 34, 28, 31, 37, 29, 35};
         }
         
         /// <summary>
@@ -128,7 +138,8 @@ namespace TweakBot
         // calculate further map statistics
         public void CalculateMap()
         {
-
+            foreach (SuperRegion superRegion in superRegions)
+                superRegion.Calculate();
         }
 
         public String getName(int id)
