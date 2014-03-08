@@ -9,6 +9,12 @@ namespace TweakBot
     
     class BotState
     {
+        // settings your_bot -b : The name of your bot is given.
+        private String myName;
+
+        // settings opponent_bot -b : The name of your opponent bot is given.
+        private String opponentName;
+
         private List<Region> regions;
         private List<SuperRegion> superRegions;
 
