@@ -22,9 +22,25 @@ namespace TweakBot
         {
             switch (parts[1])
             {
+                
                 case "super_regions":
-                    // TODO: read and process super_regions
-                    break;
+                    for (int i = 2; i < parts.Length; i++)
+                    {
+                        try
+                        {
+                            int superRegionId = int.Parse(parts[i]);
+                            i++;
+                            int reward = int.Parse(parts[i]);
+                            superRegions.Add(new SuperRegion(superRegionId, reward));
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine("ERROR: Unable to parse SuperRegions");
+                            Console.WriteLine("Msg: "+e.Message);
+                        }
+                    }
+                break;
+
                 case "regions":
                     // TODO: read and process regions
                     break;
