@@ -42,7 +42,22 @@ namespace TweakBot
                 break;
 
                 case "regions":
-                    // TODO: read and process regions
+                    for (int i = 2; i < parts.Length; i++)
+                    {
+                        try
+                        {
+                            int regionId = int.Parse(parts[i]);
+                            i++;
+                            int superRegionId = int.Parse(parts[i]);
+                            SuperRegion sR = superRegions[superRegionId-1];
+                            regions.Add(new Region(regionId, sR));
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine("ERROR: Unable to parse Regions");
+                            Console.WriteLine("Msg: "+e.Message);
+                        }
+                    }
                     break;
                 case "neighbours":
                     // TODO: read and process neighbours

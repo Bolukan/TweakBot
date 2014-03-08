@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="BotParser.cs" />
     <Compile Include="BotState.cs" />
+    <Compile Include="Map.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>

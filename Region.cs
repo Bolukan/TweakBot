@@ -25,7 +25,14 @@ namespace TweakBot
             this.playerName = "Unknown";
         }
 
-        public
+        /// <summary>
+        /// returns id
+        /// </summary>
+        /// <returns>id</returns>
+        public int getId()
+        {
+            return id;
+        }
 
 
     }

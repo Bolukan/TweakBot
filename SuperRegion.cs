@@ -38,21 +38,27 @@ namespace TweakBot
         /// </summary>
         /// <returns>id </returns>
         public int getId()
-        { return this.id; }
+        { 
+            return this.id; 
+        }
 
         /// <summary>
         /// return armies reward
         /// </summary>
         /// <returns>armies reward</returns>
         public int getArmiesReward()
-        { return this.armiesReward; }
+        { 
+            return this.armiesReward; 
+        }
 
         /// <summary>
         /// return regions of SuperRegion
         /// </summary>
         /// <returns>List of regions</returns>
         public List<Region> getRegions()
-        { return this.regions; }
+        { 
+            return this.regions; 
+        }
 
     }
 }
