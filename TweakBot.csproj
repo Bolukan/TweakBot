@@ -60,16 +60,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BotParser.cs" />
-    <Compile Include="BotState.cs" />
-    <Compile Include="Map.cs" />
+    <Compile Include="Bot\BotParser.cs" />
+    <Compile Include="Bot\BotState.cs" />
+    <Compile Include="Map\Map.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Region.cs" />
-    <Compile Include="SuperRegion.cs" />
+    <Compile Include="Map\Region.cs" />
+    <Compile Include="Map\SuperRegion.cs" />
+    <Compile Include="Bot\TweakBot.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

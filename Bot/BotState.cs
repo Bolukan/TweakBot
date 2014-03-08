@@ -93,24 +93,7 @@ namespace TweakBot
             }
         }
 
-        public void settings(String[] parts)
-        {
-            switch (parts[1])
-            {
-                case "your_bot":
-                    myName = parts[2];
-                    break;
-                case "opponent_bot":
-                    opponentName = parts[2];
-                    break;
-                case "starting_armies":
-                    // TODO: read and process neighbours
-                    break;
-                default:
-                    // EXCEPTION
-                    break;
-            }
-        }
+
 
     } // class
 } // nameSpace

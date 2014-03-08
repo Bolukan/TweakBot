@@ -5,6 +5,26 @@ namespace TweakBot
 {
     class Map
     {
+        /// <summary>
+        /// static self
+        /// </summary>
+        private static Map instance;
+
+        /// <summary>
+        /// give static self
+        /// </summary>
+        /// <returns>Map</returns>
+        public static Map GetInstance()
+        {
+            if (instance == null)
+            {
+                instance = new Map();
+            }
+            return instance;
+        }
+
+        private String[] names;
+        
         private List<Region> regions { get; set; }
         private List<SuperRegion> superRegions { get; set; }
 
@@ -15,6 +35,8 @@ namespace TweakBot
         {
             regions = new List<Region>();
             superRegions = new List<SuperRegion>();
+            names = new String[3];
+            names[0] = "neutral";
         }
         
         /// <summary>
@@ -35,16 +57,29 @@ namespace TweakBot
             regions.Add(region);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public List<SuperRegion> getSuperRegions()
         {
             return superRegions;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public List<Region> getRegions()
         {
             return regions;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public SuperRegion getSuperRegion(int id)
         {
             // search
@@ -60,6 +95,11 @@ namespace TweakBot
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Region getRegion(int id)
         {
             // search
@@ -74,6 +114,17 @@ namespace TweakBot
                 return regions[0];
             }
         }
+        
+        public void SetMyName(String name)
+        {
+            names[1] = name;
+        }
+
+        public void SetOpponentName(String name)
+        {
+            names[2] = name;
+        }
+
 
     }
 }
