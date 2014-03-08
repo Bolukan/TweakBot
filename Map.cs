@@ -45,7 +45,7 @@ namespace TweakBot
             return regions;
         }
 
-        public SuperRegion SuperRegion(int id)
+        public SuperRegion getSuperRegion(int id)
         {
             // quick
             if (superRegions[id-1].getId() == id) return superRegions[id-1];
@@ -53,7 +53,7 @@ namespace TweakBot
             return superRegions.Find(x => x.getId()==id);
         }
 
-        public Region Region(int id)
+        public Region getRegion(int id)
         {
             // quick
             if (regions[id - 1].getId() == id) return regions[id - 1];

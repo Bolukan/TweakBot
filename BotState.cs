@@ -17,14 +17,12 @@ namespace TweakBot
 
         // Map, SuperRegions, Regions
         private Map myMap;
-
-
+        
         public BotState()
         {
             myMap = new Map();
         }
-
-        
+                
         public void setup_map(String[] parts)
         {
             switch (parts[1])
@@ -38,7 +36,7 @@ namespace TweakBot
                             int superRegionId = int.Parse(parts[i]);
                             i++;
                             int reward = int.Parse(parts[i]);
-                            superRegions.Add(new SuperRegion(superRegionId, reward));
+                            myMap.AddSuperRegion(new SuperRegion(superRegionId, reward));
                         }
                         catch (Exception e)
                         {
@@ -56,8 +54,8 @@ namespace TweakBot
                             int regionId = int.Parse(parts[i]);
                             i++;
                             int superRegionId = int.Parse(parts[i]);
-                            SuperRegion sR = superRegions[superRegionId-1];
-                            regions.Add(new Region(regionId, sR));
+                            SuperRegion superRegion = myMap.getSuperRegion(superRegionId);
+                            myMap.AddRegion(new Region(regionId, superRegion));
                         }
                         catch (Exception e)
                         {
