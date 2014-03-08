@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.IO;
 
 namespace TweakBot
 {
@@ -33,8 +35,11 @@ namespace TweakBot
 
                 case "pick_starting_regions":
                     Map.GetInstance().CalculateMap();
+                    int[] regionsoffered = parts.Skip(2).Select(p => int.Parse(p)).ToArray();
+                    int[] fav = Map.GetFavorites().Intersect(regionsoffered).ToArray();
+                    Console.WriteLine(string.Join(" ", fav.Take(6).Select(x => x.ToString()).ToArray()));
                     break;
-                    
+            
               
                 // setup_map
                 case "setup_map":

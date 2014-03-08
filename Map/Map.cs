@@ -147,5 +147,11 @@ namespace TweakBot
             if (id < 0 | id > 2) return "";
             return names[id];
         }
+
+        public static int[] GetFavorites()
+        {
+            return Favorites;
+        }
+        
     }
 }
