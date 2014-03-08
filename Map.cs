@@ -5,8 +5,8 @@ namespace TweakBot
 {
     class Map
     {
-        public List<Region> regions;
-	    public List<SuperRegion> superRegions;
+        private List<Region> regions { get; set; }
+        private List<SuperRegion> superRegions { get; set; }
 
         /// <summary>
         /// Initialise Map
@@ -47,21 +47,33 @@ namespace TweakBot
 
         public SuperRegion getSuperRegion(int id)
         {
-            // quick
-            if (superRegions[id-1].getId() == id) return superRegions[id-1];
             // search
-            return superRegions.Find(x => x.getId()==id);
+            try
+            {
+                return superRegions.Find(x => x.getId()==id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("ERROR: Unable to find SuperRegion");
+                Console.WriteLine("Msg: " + e.Message);
+                return superRegions[0];
+            }
         }
 
         public Region getRegion(int id)
         {
-            // quick
-            if (regions[id - 1].getId() == id) return regions[id - 1];
             // search
-            return regions.Find(x => x.getId() == id);
+            try
+            {
+                return regions.Find(x => x.getId() == id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("ERROR: Unable to find Region");
+                Console.WriteLine("Msg: " + e.Message);
+                return regions[0];
+            }
         }
-
-
 
     }
 }

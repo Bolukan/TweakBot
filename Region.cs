@@ -5,9 +5,11 @@ namespace TweakBot
 {
     class Region
     {
+        // final
         private int id;
         private List<Region> neighbours;
         private SuperRegion superRegion;
+        // round specific
         private int armies;
         private String playerName;
         
@@ -25,6 +27,11 @@ namespace TweakBot
             this.playerName = "Unknown";
         }
 
+        public void AddNeighbour(Region neighbour)
+        {
+            neighbours.Add(neighbour);
+        }
+
         /// <summary>
         /// returns id
         /// </summary>
@@ -34,6 +41,15 @@ namespace TweakBot
             return id;
         }
 
+        public List<Region> getNeighbours()
+        {
+            return neighbours;
+        }
+
+        public SuperRegion getSuperRegion()
+        {
+            return superRegion;
+        }
 
     }
 }

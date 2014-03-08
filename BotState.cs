@@ -64,9 +64,29 @@ namespace TweakBot
                         }
                     }
                     break;
+
                 case "neighbours":
-                    // TODO: read and process neighbours
+                    for (int i = 2; i < parts.Length; i++)
+                    {
+                        try
+                        {
+                            Region region = myMap.getRegion(int.Parse(parts[i]));
+                            i++;
+                            foreach (String neighbourStr in parts[i].Split(','))
+                            {
+                                Region neighbour = myMap.getRegion(int.Parse(neighbourStr));
+                                region.AddNeighbour(neighbour);
+                                neighbour.AddNeighbour(region);
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine("ERROR: Unable to parse Regions");
+                            Console.WriteLine("Msg: "+e.Message);
+                        }
+                    }
                     break;
+
                 default:
                     // EXCEPTION
                     break;
@@ -78,10 +98,10 @@ namespace TweakBot
             switch (parts[1])
             {
                 case "your_bot":
-                    // TODO: read and process super_regions
+                    myName = parts[2];
                     break;
                 case "opponent_bot":
-                    // TODO: read and process regions
+                    opponentName = parts[2];
                     break;
                 case "starting_armies":
                     // TODO: read and process neighbours
