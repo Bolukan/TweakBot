@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Bot\BotParser.cs" />
     <Compile Include="Bot\BotState.cs" />
+    <Compile Include="Bot\Random.cs" />
     <Compile Include="Map\Map.cs" />
     <Compile Include="Map\Player.cs" />
     <Compile Include="Program.cs" />

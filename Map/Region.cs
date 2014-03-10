@@ -68,6 +68,11 @@ namespace TweakBot
             this.player = 0;
         }
 
+        public int GetArmies()
+        {
+            return armies;
+        }
+
         public bool IsPlayerMine()
         {
             return player == 2;
@@ -76,6 +81,11 @@ namespace TweakBot
         public bool IsPlayerOther()
         {
             return player == 3;
+        }
+
+        public bool IsPlayerNeutral()
+        {
+            return player == 1;
         }
 
     }

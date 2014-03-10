@@ -94,13 +94,34 @@ namespace TweakBot
         public String Place_armies()
         {
             StringBuilder temp = new StringBuilder();
-
+            Random rnd = Rand.Rnd();
             for (int i = this.GetArmies(); i > 0; i--)
             {
-                temp.Append(Player.Name(2) + " place_armies " + myRegions.First(R => R.IsPlayerMine()).GetId().ToString() + " 1");
+                temp.Append(Player.Name(2) + " place_armies " + myRegions[rnd.Next(myRegions.Count())].GetId().ToString() + " 1");
                 if (i > 1) temp.Append(", ");
             }
             return temp.ToString();
+        }
+
+        public String Attack()
+        {
+            StringBuilder temp = new StringBuilder();
+            Random rnd = Rand.Rnd();
+            Region myRegion = myRegions[rnd.Next(myRegions.Count())];
+            foreach(Region neighbour in myRegion.GetNeighbours())
+            {
+                if (((neighbour.GetArmies() * 2) < myRegion.GetArmies()) && (neighbour.IsPlayerOther()))
+                {
+                    temp.Append(Player.Name(2) + " attack/transfer " + myRegion.GetId().ToString() + " " + neighbour.GetId().ToString() + " " + String.Concat(myRegion.GetArmies() - 1));
+                    temp.Append(", ");
+                }
+            }
+
+            if (temp.Length == 0) return "No moves";
+                //temp.Append(Player.Name(2) + " place_armies " + myRegions.First(R => R.IsPlayerMine()).GetId().ToString() + " 1");
+                //if (i > 1) temp.Append(", ");
+       
+            return temp.ToString().TrimEnd(',');
         }
 
     } // class

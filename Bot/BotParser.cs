@@ -22,7 +22,7 @@ namespace TweakBot
                             Console.WriteLine(BotState.GetInstance().Place_armies());
                             break;
                         case "attack/transfer":
-                            Console.WriteLine("No moves");
+                            Console.WriteLine(BotState.GetInstance().Attack());
                             break;
                         default:
                             // EXCEPTION
