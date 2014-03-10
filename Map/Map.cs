@@ -26,9 +26,10 @@ namespace TweakBot
         private List<Region> regions { get; set; }
         private List<SuperRegion> superRegions { get; set; }
 
+        // turn specific
+        private static int turn;
         private int starting_armies;
-        private int turn;
-
+        
         /// <summary>
         /// Initialise Map
         /// </summary>
@@ -40,6 +41,7 @@ namespace TweakBot
             starting_armies = 5;
             turn = 0;
         }
+        
         
         /// <summary>
         /// Add SuperRegion (setup_map super_regions)
@@ -63,7 +65,7 @@ namespace TweakBot
         /// 
         /// </summary>
         /// <returns></returns>
-        public List<SuperRegion> getSuperRegions()
+        public List<SuperRegion> GetSuperRegions()
         {
             return superRegions;
         }
@@ -72,7 +74,7 @@ namespace TweakBot
         /// 
         /// </summary>
         /// <returns></returns>
-        public List<Region> getRegions()
+        public List<Region> GetRegions()
         {
             return regions;
         }
@@ -82,7 +84,7 @@ namespace TweakBot
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public SuperRegion getSuperRegion(int id)
+        public SuperRegion GetSuperRegion(int id)
         {
             // search
             try
@@ -146,7 +148,6 @@ namespace TweakBot
         public void SetArmies(int starting_armies)
         {
             this.starting_armies = starting_armies;
-            NextTurn();
         }
 
         /// <summary>
@@ -174,10 +175,6 @@ namespace TweakBot
         {
             return turn;
         }
-
-
-
-
 
     }
 }

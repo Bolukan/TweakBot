@@ -63,6 +63,9 @@ namespace TweakBot
             return this.regions; 
         }
 
+        /// <summary>
+        /// initialise calculations!
+        /// </summary>
         public void Calculate()
         {
             List<Region> AllNeighbours = regions.SelectMany(r => r.getNeighbours()).ToList();

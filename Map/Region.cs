@@ -9,11 +9,11 @@ namespace TweakBot
         private int id;
         private List<Region> neighbours;
         private SuperRegion superRegion;
+        
         // round specific
         private int[] armies;
         private int[] player;
-        private String playerName;
-        
+                
         /// <summary>
         /// Initialise Region
         /// </summary>
@@ -27,8 +27,6 @@ namespace TweakBot
             //
             armies = new int[100];
             player = new int[100];
-            this.armies[Map.GetInstance().GetTurn()] = 0;
-            this.player[Map.GetInstance().GetTurn()] = 0;
         }
 
         public void AddNeighbour(Region neighbour)

@@ -88,7 +88,7 @@ namespace TweakBot
                                     int regionId = int.Parse(parts[i]);
                                     i++;
                                     int superRegionId = int.Parse(parts[i]);
-                                    SuperRegion superRegion = Map.GetInstance().getSuperRegion(superRegionId);
+                                    SuperRegion superRegion = Map.GetInstance().GetSuperRegion(superRegionId);
                                     Map.GetInstance().AddRegion(new Region(regionId, superRegion));
                                 }
                                 catch (Exception e)
