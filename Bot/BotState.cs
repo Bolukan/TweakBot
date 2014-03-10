@@ -70,11 +70,11 @@ namespace TweakBot
                     {
                         try
                         {
-                            Region region = myMap.getRegion(int.Parse(parts[i]));
+                            Region region = myMap.GetRegion(int.Parse(parts[i]));
                             i++;
                             foreach (String neighbourStr in parts[i].Split(','))
                             {
-                                Region neighbour = myMap.getRegion(int.Parse(neighbourStr));
+                                Region neighbour = myMap.GetRegion(int.Parse(neighbourStr));
                                 region.AddNeighbour(neighbour);
                                 neighbour.AddNeighbour(region);
                             }

@@ -7,6 +7,7 @@ namespace TweakBot
 {
     class BotParser
     {
+     
         public void Parse(String line)
         {
             String[] parts = line.Split(' ');
@@ -18,13 +19,13 @@ namespace TweakBot
                     switch (parts[1].ToLowerInvariant())
                     {
                         case "starting_armies":
-                            // TODO
+                            Map.GetInstance().SetArmies(int.Parse(parts[2]));
                             break;
                         case "your_bot":
-                            Map.GetInstance().SetMyName(parts[2]);
+                            Player.SetMyName(parts[2]);
                             break;
                         case "opponent_bot":
-                            Map.GetInstance().SetOpponentName(parts[2]);
+                            Player.SetOtherName(parts[2]);
                             break;
                         default:
                             // EXCEPTION
@@ -32,6 +33,22 @@ namespace TweakBot
                     }
                     break;
 
+                case "update_map":
+                    for (int i = 1; i < parts.Length; i++)
+                    {
+                        try
+                        {
+                            Map.GetInstance().GetRegion(int.Parse(parts[i++])).UpdateMap(Player.Name(parts[i++]), int.Parse(parts[i]));
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine("ERROR: Unable to parse update_map");
+                            Console.WriteLine("Msg: " + e.Message);
+                        }
+                    }
+
+
+                    break;
 
                 case "pick_starting_regions":
                     Map.GetInstance().CalculateMap();
@@ -87,11 +104,11 @@ namespace TweakBot
                             {
                                 try
                                 {
-                                    Region region = Map.GetInstance().getRegion(int.Parse(parts[i]));
+                                    Region region = Map.GetInstance().GetRegion(int.Parse(parts[i]));
                                     i++;
                                     foreach (String neighbourStr in parts[i].Split(','))
                                     {
-                                        Region neighbour = Map.GetInstance().getRegion(int.Parse(neighbourStr));
+                                        Region neighbour = Map.GetInstance().GetRegion(int.Parse(neighbourStr));
                                         region.AddNeighbour(neighbour);
                                         neighbour.AddNeighbour(region);
                                     }

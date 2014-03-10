@@ -10,8 +10,6 @@ namespace TweakBot
         /// </summary>
         private static Map instance;
 
-        private static int[] Favorites;
-
         /// <summary>
         /// give static self
         /// </summary>
@@ -25,10 +23,11 @@ namespace TweakBot
             return instance;
         }
 
-        private String[] names;
-        
         private List<Region> regions { get; set; }
         private List<SuperRegion> superRegions { get; set; }
+
+        private int starting_armies;
+        private int turn;
 
         /// <summary>
         /// Initialise Map
@@ -37,16 +36,9 @@ namespace TweakBot
         {
             regions = new List<Region>();
             superRegions = new List<SuperRegion>();
-            names = new String[3];
-            names[0] = "neutral";
 
-            Favorites = new int[] {
-                39, 40, 41, 42, 
-                12, 10, 11, 13, 
-                23, 21, 22, 24, 25, 26,
-                20, 17, 18, 19, 15, 16, 14,
-                5, 9, 3, 2, 4, 7, 8, 1, 6,
-                38, 36, 33, 30, 32, 27, 34, 28, 31, 37, 29, 35};
+            starting_armies = 5;
+            turn = 0;
         }
         
         /// <summary>
@@ -110,7 +102,7 @@ namespace TweakBot
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Region getRegion(int id)
+        public Region GetRegion(int id)
         {
             // search
             try
@@ -124,34 +116,68 @@ namespace TweakBot
                 return regions[0];
             }
         }
-        
-        public void SetMyName(String name)
-        {
-            names[1] = name;
-        }
-
-        public void SetOpponentName(String name)
-        {
-            names[2] = name;
-        }
-
+ 
         // calculate further map statistics
         public void CalculateMap()
         {
             foreach (SuperRegion superRegion in superRegions)
                 superRegion.Calculate();
         }
-
-        public String getName(int id)
-        {
-            if (id < 0 | id > 2) return "";
-            return names[id];
-        }
-
+        
+        /// <summary>
+        /// static list of favorites regions
+        /// </summary>
+        /// <returns>42 regions (first best)</returns>
         public static int[] GetFavorites()
         {
-            return Favorites;
+            return new int[] {
+                39, 40, 41, 42, 
+                12, 10, 11, 13, 
+                23, 21, 22, 24, 25, 26,
+                20, 17, 18, 19, 15, 16, 14,
+                5, 9, 3, 2, 4, 7, 8, 1, 6,
+                38, 36, 33, 30, 32, 27, 34, 28, 31, 37, 29, 35};
         }
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="starting_armies"></param>
+        public void SetArmies(int starting_armies)
+        {
+            this.starting_armies = starting_armies;
+            NextTurn();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public int GetArmies()
+        {
+            return starting_armies;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void NextTurn()
+        {
+            turn++;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public int GetTurn()
+        {
+            return turn;
+        }
+
+
+
+
+
     }
 }
