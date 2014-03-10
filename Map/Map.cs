@@ -27,7 +27,7 @@ namespace TweakBot
         private List<SuperRegion> superRegions { get; set; }
 
         // turn specific
-        private static int turn;
+        private int turn;
         private int starting_armies;
         
         /// <summary>
@@ -89,7 +89,7 @@ namespace TweakBot
             // search
             try
             {
-                return superRegions.Find(x => x.getId()==id);
+                return superRegions.Find(x => x.GetId()==id);
             }
             catch (Exception e)
             {
@@ -109,7 +109,7 @@ namespace TweakBot
             // search
             try
             {
-                return regions.Find(x => x.getId() == id);
+                return regions.Find(x => x.GetId() == id);
             }
             catch (Exception e)
             {

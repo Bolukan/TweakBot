@@ -28,7 +28,7 @@ namespace TweakBot
         /// setup_map regions
         /// </summary>
         /// <param name="region">Region</param>
-        public void addRegion(Region region)
+        public void AddRegion(Region region)
         {
             if (!this.regions.Contains(region))
             {
@@ -40,7 +40,7 @@ namespace TweakBot
         /// return id
         /// </summary>
         /// <returns>id </returns>
-        public int getId()
+        public int GetId()
         { 
             return this.id; 
         }
@@ -49,7 +49,7 @@ namespace TweakBot
         /// return armies reward
         /// </summary>
         /// <returns>armies reward</returns>
-        public int getArmiesReward()
+        public int GetArmiesReward()
         { 
             return this.armiesReward; 
         }
@@ -58,7 +58,7 @@ namespace TweakBot
         /// return regions of SuperRegion
         /// </summary>
         /// <returns>List of regions</returns>
-        public List<Region> getRegions()
+        public List<Region> GetRegions()
         { 
             return this.regions; 
         }
@@ -68,7 +68,7 @@ namespace TweakBot
         /// </summary>
         public void Calculate()
         {
-            List<Region> AllNeighbours = regions.SelectMany(r => r.getNeighbours()).ToList();
+            List<Region> AllNeighbours = regions.SelectMany(r => r.GetNeighbours()).ToList();
             neighbours = AllNeighbours.Distinct().Except(regions).ToList();
         }
 
