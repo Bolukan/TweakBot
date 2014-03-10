@@ -62,7 +62,21 @@ namespace TweakBot
             this.player = player;
         }
 
-        //public void Update
+        public void ResetTurn()
+        {
+            this.armies = 0;
+            this.player = 0;
+        }
+
+        public bool IsPlayerMine()
+        {
+            return player == 2;
+        }
+
+        public bool IsPlayerOther()
+        {
+            return player == 3;
+        }
 
     }
 }

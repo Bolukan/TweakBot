@@ -15,11 +15,28 @@ namespace TweakBot
             switch (parts[0].ToLowerInvariant())
             {
                 // settings
+                case "go":
+                   switch (parts[1].ToLowerInvariant())
+                    {
+                        case "place_armies":
+                            Console.WriteLine(BotState.GetInstance().Place_armies());
+                            break;
+                        case "attack/transfer":
+                            Console.WriteLine("No moves");
+                            break;
+                        default:
+                            // EXCEPTION
+                            break;
+                    }
+                    break;
+
+                
+                // settings
                 case "settings":
                     switch (parts[1].ToLowerInvariant())
                     {
                         case "starting_armies":
-                            Map.GetInstance().SetArmies(int.Parse(parts[2]));
+                            BotState.GetInstance().SetArmies(int.Parse(parts[2]));
                             break;
                         case "your_bot":
                             Player.SetMyName(parts[2]);
@@ -34,6 +51,9 @@ namespace TweakBot
                     break;
 
                 case "update_map":
+                    // Reset values
+                    Map.GetInstance().ResetTurn();
+                    // Read no situation
                     for (int i = 1; i < parts.Length; i++)
                     {
                         try
@@ -46,7 +66,8 @@ namespace TweakBot
                             Console.WriteLine("Msg: " + e.Message);
                         }
                     }
-
+                    // Calculate map
+                    Map.GetInstance().CalcTurn();
 
                     break;
 

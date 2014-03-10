@@ -26,9 +26,6 @@ namespace TweakBot
         private List<Region> regions { get; set; }
         private List<SuperRegion> superRegions { get; set; }
 
-        // turn specific
-        private int turn;
-        private int starting_armies;
         
         /// <summary>
         /// Initialise Map
@@ -37,11 +34,7 @@ namespace TweakBot
         {
             regions = new List<Region>();
             superRegions = new List<SuperRegion>();
-
-            starting_armies = 5;
-            turn = 0;
         }
-        
         
         /// <summary>
         /// Add SuperRegion (setup_map super_regions)
@@ -141,39 +134,17 @@ namespace TweakBot
                 38, 36, 33, 30, 32, 27, 34, 28, 31, 37, 29, 35};
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="starting_armies"></param>
-        public void SetArmies(int starting_armies)
+        public void ResetTurn()
         {
-            this.starting_armies = starting_armies;
+            foreach (Region myRegion in Map.GetInstance().GetRegions())
+            {
+                myRegion.ResetTurn();
+            }
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public int GetArmies()
+        
+        public void CalcTurn()
         {
-            return starting_armies;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private void NextTurn()
-        {
-            turn++;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public int GetTurn()
-        {
-            return turn;
+            BotState.GetInstance().CalcTurn();
         }
 
     }
