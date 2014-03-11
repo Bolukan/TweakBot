@@ -92,6 +92,13 @@ namespace TweakBot
 
         #endregion
 
+        #region Player
+
+        public bool IsPlayerUnknown()
+        {
+            return player.Id == 0;
+        }
+
         public bool IsPlayerNeutral()
         {
             return player.Id == 1;
@@ -107,5 +114,6 @@ namespace TweakBot
             return player.Id == 3;
         }
 
+        #endregion
     }
 }

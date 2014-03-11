@@ -110,7 +110,9 @@ namespace TweakBot
                                     i++;
                                     int superRegionId = int.Parse(parts[i]);
                                     SuperRegion superRegion = Map.GetInstance().GetSuperRegion(superRegionId);
-                                    Map.GetInstance().AddRegion(new Region(regionId, superRegion));
+                                    Region newRegion = new Region(regionId, superRegion);
+                                    Map.GetInstance().AddRegion(newRegion);
+                                    superRegion.AddRegion(newRegion);
                                 }
                                 catch (Exception e)
                                 {
@@ -120,7 +122,7 @@ namespace TweakBot
                             }
                             break;
 
-                        case "neighbours":
+                        case "neighbors":
                             for (int i = 2; i < parts.Length; i++)
                             {
                                 try

@@ -79,17 +79,17 @@ namespace TweakBot
             return myRegions;
         }
 
-        public String Place_armies()
-        {
-            StringBuilder temp = new StringBuilder();
-            Random rnd = Rand.Rnd();
-            for (int i = this.starting_armies; i > 0; i--)
-            {
-                temp.Append(Player.Me().Name + " place_armies " + myRegions[rnd.Next(myRegions.Count())].Id.ToString() + " 1");
-                if (i > 1) temp.Append(", ");
-            }
-            return temp.ToString();
-        }
+        //public String Place_armies()
+        //{
+        //    StringBuilder temp = new StringBuilder();
+        //    Random rnd = Rand.Rnd();
+        //    for (int i = this.starting_armies; i > 0; i--)
+        //    {
+        //        temp.Append(Player.Me().Name + " place_armies " + myRegions[rnd.Next(myRegions.Count())].Id.ToString() + " 1");
+        //        if (i > 1) temp.Append(", ");
+        //    }
+        //    return temp.ToString();
+        //}
 
         public String Attack()
         {
