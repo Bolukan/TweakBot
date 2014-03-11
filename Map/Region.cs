@@ -12,8 +12,10 @@ namespace TweakBot
         
         // round specific
         private int armies;
-        private int player;
-                
+        private Player player;
+
+        #region initial values
+
         /// <summary>
         /// Initialise Region
         /// </summary>
@@ -36,19 +38,45 @@ namespace TweakBot
         /// returns id
         /// </summary>
         /// <returns>id</returns>
-        public int GetId()
+        public int Id
         {
-            return id;
+            get { return id; }
         }
 
-        public List<Region> GetNeighbours()
+        public List<Region> Neighbours
         {
-            return neighbours;
+            get { return neighbours; }
         }
 
-        public SuperRegion GetSuperRegion()
+        public SuperRegion GetSuperRegion
         {
-            return superRegion;
+            get { return superRegion; }
+        }
+
+        #endregion
+
+        #region round specific
+
+        public void AddArmies(int extraArmies)
+        {
+            armies += extraArmies;
+        }
+
+        public int Armies
+        {
+            get { return armies; }
+            set { armies = value; }
+        }
+
+        public Player Player
+        {
+            get { return player; }
+        }
+
+        public void ResetTurn()
+        {
+            Armies = 0;
+            player = Player.Unknown();
         }
 
         /// <summary>
@@ -56,36 +84,27 @@ namespace TweakBot
         /// </summary>
         /// <param name="Name"></param>
         /// <param name="armies"></param>
-        public void UpdateMap(int player, int armies)
+        public void UpdateMap(Player player, int armies)
         {
-            this.armies = armies;
+            Armies = armies;
             this.player = player;
         }
 
-        public void ResetTurn()
+        #endregion
+
+        public bool IsPlayerNeutral()
         {
-            this.armies = 0;
-            this.player = 0;
+            return player.Id == 1;
         }
 
-        public int GetArmies()
+        public bool IsPlayerMy()
         {
-            return armies;
-        }
-
-        public bool IsPlayerMine()
-        {
-            return player == 2;
+            return player.Id == 2;
         }
 
         public bool IsPlayerOther()
         {
-            return player == 3;
-        }
-
-        public bool IsPlayerNeutral()
-        {
-            return player == 1;
+            return player.Id == 3;
         }
 
     }

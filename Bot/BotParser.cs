@@ -19,10 +19,10 @@ namespace TweakBot
                    switch (parts[1].ToLowerInvariant())
                     {
                         case "place_armies":
-                            Console.WriteLine(BotState.GetInstance().Place_armies());
+                            Console.WriteLine(Go.Place_Armies());
                             break;
                         case "attack/transfer":
-                            Console.WriteLine(BotState.GetInstance().Attack());
+                            Console.WriteLine(Go.Attack_Transfer());
                             break;
                         default:
                             // EXCEPTION
@@ -36,7 +36,7 @@ namespace TweakBot
                     switch (parts[1].ToLowerInvariant())
                     {
                         case "starting_armies":
-                            BotState.GetInstance().SetArmies(int.Parse(parts[2]));
+                            BotState.GetInstance().StartingArmies = int.Parse(parts[2]);
                             break;
                         case "your_bot":
                             Player.SetMyName(parts[2]);
@@ -58,7 +58,7 @@ namespace TweakBot
                     {
                         try
                         {
-                            Map.GetInstance().GetRegion(int.Parse(parts[i++])).UpdateMap(Player.Name(parts[i++]), int.Parse(parts[i]));
+                            Map.GetInstance().GetRegion(int.Parse(parts[i++])).UpdateMap(Player.GetPlayer(parts[i++]), int.Parse(parts[i]));
                         }
                         catch (Exception e)
                         {
@@ -130,8 +130,7 @@ namespace TweakBot
                                     foreach (String neighbourStr in parts[i].Split(','))
                                     {
                                         Region neighbour = Map.GetInstance().GetRegion(int.Parse(neighbourStr));
-                                        region.AddNeighbour(neighbour);
-                                        neighbour.AddNeighbour(region);
+                                        Map.GetInstance().AddPath(region, neighbour);
                                     }
                                 }
                                 catch (Exception e)

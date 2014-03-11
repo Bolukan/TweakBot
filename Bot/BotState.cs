@@ -41,22 +41,10 @@ namespace TweakBot
             turn = -1;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="starting_armies"></param>
-        public void SetArmies(int starting_armies)
+        public int StartingArmies
         {
-            this.starting_armies = starting_armies;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public int GetArmies()
-        {
-            return starting_armies;
+            get { return starting_armies; }
+            set { starting_armies = value; }
         }
 
         /// <summary>
@@ -82,7 +70,7 @@ namespace TweakBot
         public void CalcTurn()
         {
             Map myMap = Map.GetInstance();
-            myRegions = myMap.GetRegions().FindAll(R => R.IsPlayerMine());
+            myRegions = myMap.GetRegions().FindAll(R => R.IsPlayerMy());
             otherRegions = myMap.GetRegions().FindAll(R => R.IsPlayerOther());
         }
 
@@ -95,9 +83,9 @@ namespace TweakBot
         {
             StringBuilder temp = new StringBuilder();
             Random rnd = Rand.Rnd();
-            for (int i = this.GetArmies(); i > 0; i--)
+            for (int i = this.starting_armies; i > 0; i--)
             {
-                temp.Append(Player.Name(2) + " place_armies " + myRegions[rnd.Next(myRegions.Count())].GetId().ToString() + " 1");
+                temp.Append(Player.Me().Name + " place_armies " + myRegions[rnd.Next(myRegions.Count())].Id.ToString() + " 1");
                 if (i > 1) temp.Append(", ");
             }
             return temp.ToString();
@@ -108,11 +96,11 @@ namespace TweakBot
             StringBuilder temp = new StringBuilder();
             Random rnd = Rand.Rnd();
             Region myRegion = myRegions[rnd.Next(myRegions.Count())];
-            foreach(Region neighbour in myRegion.GetNeighbours())
+            foreach(Region neighbour in myRegion.Neighbours)
             {
-                if (((neighbour.GetArmies() * 2) < myRegion.GetArmies()) && (neighbour.IsPlayerOther()))
+                if (((neighbour.Armies * 2) < myRegion.Armies) && (neighbour.IsPlayerOther()))
                 {
-                    temp.Append(Player.Name(2) + " attack/transfer " + myRegion.GetId().ToString() + " " + neighbour.GetId().ToString() + " " + String.Concat(myRegion.GetArmies() - 1));
+                    temp.Append(Player.Me().Name + " attack/transfer " + myRegion.Id.ToString() + " " + neighbour.Id.ToString() + " " + String.Concat(myRegion.Armies - 1));
                     temp.Append(", ");
                 }
             }

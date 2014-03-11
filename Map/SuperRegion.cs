@@ -10,7 +10,10 @@ namespace TweakBot
         private int armiesReward;
         private List<Region> regions;
 
+        // Extra statistics
         private List<Region> neighbours; // neighbours from regions but not own regions
+
+        #region Initiation
 
         /// <summary>
         /// setup_map super_regions
@@ -24,6 +27,22 @@ namespace TweakBot
             this.regions = new List<Region>();
         }
 
+        public int Id
+        {
+            get { return id; }
+        }
+
+        public int ArmiesReward
+        {
+            get { return armiesReward; }
+
+        }
+
+        public List<Region> Regions
+        {
+            get { return regions; }
+        }
+
         /// <summary>
         /// setup_map regions
         /// </summary>
@@ -35,42 +54,67 @@ namespace TweakBot
                 this.regions.Add(region);
             }
         }
-        
-        /// <summary>
-        /// return id
-        /// </summary>
-        /// <returns>id </returns>
-        public int GetId()
-        { 
-            return this.id; 
-        }
+ 
+#endregion
 
-        /// <summary>
-        /// return armies reward
-        /// </summary>
-        /// <returns>armies reward</returns>
-        public int GetArmiesReward()
-        { 
-            return this.armiesReward; 
-        }
-
-        /// <summary>
-        /// return regions of SuperRegion
-        /// </summary>
-        /// <returns>List of regions</returns>
-        public List<Region> GetRegions()
-        { 
-            return this.regions; 
-        }
+        #region Initial Calculations
 
         /// <summary>
         /// initialise calculations!
         /// </summary>
         public void Calculate()
         {
-            List<Region> AllNeighbours = regions.SelectMany(r => r.GetNeighbours()).ToList();
+            CalcNeighbours();
+        }
+        
+        private void CalcNeighbours()
+        {
+            // get all neighbours of regions of superregion
+            List<Region> AllNeighbours = regions.SelectMany(r => r.Neighbours).ToList();
+            // get all neighbours of superregion
             neighbours = AllNeighbours.Distinct().Except(regions).ToList();
         }
+
+        #endregion
+
+        public List<Region> Neighbours()
+        {
+            return neighbours;
+        }
+
+        public int CountRegions
+        {
+            get { return regions.Count; }
+        }
+
+        #region Turn dependent info
+
+        public List<Region> RegionsMy()
+        {
+            return regions.Where(r => r.IsPlayerMy()).ToList();
+        }
+
+        public List<Region> RegionsOther()
+        {
+            return regions.Where(r => r.IsPlayerOther()).ToList();
+        }
+
+        public int CountRegionsMy
+        {
+            get { return regions.Count(r => r.IsPlayerMy()); }
+        }
+
+        public int CountRegionsNotMy
+        {
+            get { return CountRegions - regions.Count(r => r.IsPlayerMy()); }
+        }
+
+        public int CountRegionsOther
+        {
+            get { return regions.Count(r => r.IsPlayerOther()); }
+        }
+
+        #endregion
 
     }
 }

@@ -62,9 +62,11 @@
   <ItemGroup>
     <Compile Include="Bot\BotParser.cs" />
     <Compile Include="Bot\BotState.cs" />
+    <Compile Include="Bot\Go.cs" />
     <Compile Include="Bot\Random.cs" />
     <Compile Include="Map\Map.cs" />
     <Compile Include="Map\Player.cs" />
+    <Compile Include="Map\Path.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

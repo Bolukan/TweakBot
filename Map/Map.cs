@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace TweakBot
 {
@@ -25,7 +26,7 @@ namespace TweakBot
 
         private List<Region> regions { get; set; }
         private List<SuperRegion> superRegions { get; set; }
-
+        private List<Path> paths { get; set; }
         
         /// <summary>
         /// Initialise Map
@@ -34,8 +35,11 @@ namespace TweakBot
         {
             regions = new List<Region>();
             superRegions = new List<SuperRegion>();
+            paths = new List<Path>();
         }
-        
+
+        #region SuperRegion
+
         /// <summary>
         /// Add SuperRegion (setup_map super_regions)
         /// </summary>
@@ -46,21 +50,45 @@ namespace TweakBot
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public List<SuperRegion> SuperRegions
+        {
+            get { return superRegions; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public SuperRegion GetSuperRegion(int id)
+        {
+            // search
+            try
+            {
+                return superRegions.Find(x => x.Id == id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("ERROR: Unable to find SuperRegion");
+                Console.WriteLine("Msg: " + e.Message);
+                return superRegions[0];
+            }
+        }
+
+        #endregion
+
+        #region Region
+
+        /// <summary>
         /// add Region (setup_map regions)
         /// </summary>
         /// <param name="region">Region</param>
         public void AddRegion(Region region)
         {
             regions.Add(region);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public List<SuperRegion> GetSuperRegions()
-        {
-            return superRegions;
         }
 
         /// <summary>
@@ -77,32 +105,12 @@ namespace TweakBot
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public SuperRegion GetSuperRegion(int id)
-        {
-            // search
-            try
-            {
-                return superRegions.Find(x => x.GetId()==id);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("ERROR: Unable to find SuperRegion");
-                Console.WriteLine("Msg: " + e.Message);
-                return superRegions[0];
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
         public Region GetRegion(int id)
         {
             // search
             try
             {
-                return regions.Find(x => x.GetId() == id);
+                return regions.Find(x => x.Id == id);
             }
             catch (Exception e)
             {
@@ -111,7 +119,40 @@ namespace TweakBot
                 return regions[0];
             }
         }
- 
+        
+        public int CountRegionsMy
+        {
+            get { return regions.Count(r => r.IsPlayerMy()); }
+        }
+
+        #endregion
+
+        #region Path
+
+        /// <summary>
+        /// Add SuperRegion (setup_map super_regions)
+        /// </summary>
+        /// <param name="superRegion">SuperRegion</param>
+        public void AddPath(Region regionFrom, Region regionTo)
+        {
+            paths.Add(new Path(regionFrom, regionTo));
+            paths.Add(new Path(regionTo, regionFrom));
+            regionFrom.AddNeighbour(regionTo);
+            regionTo.AddNeighbour(regionFrom);
+        }
+
+        public List<Path> Paths
+        {
+            get { return paths; }
+        }
+
+        public List<Path> PathsFromMe()
+        {
+            return paths.Where(p => p.RegionFrom.IsPlayerMy()).ToList();
+        }
+
+        #endregion
+        
         // calculate further map statistics
         public void CalculateMap()
         {
