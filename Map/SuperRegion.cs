@@ -13,6 +13,8 @@ namespace TweakBot
         // Extra statistics
         private List<Region> neighbours; // neighbours from regions but not own regions
 
+        public int TurnTactics { get; set; }
+
         #region Initiation
 
         /// <summary>
@@ -82,37 +84,14 @@ namespace TweakBot
             return neighbours;
         }
 
-        public int CountRegions
-        {
-            get { return regions.Count; }
-        }
+//        public int CountRegions
+//        {
+//            get { return regions.Count; }
+//        }
 
         #region Turn dependent info
 
-        public List<Region> RegionsMy()
-        {
-            return regions.Where(r => r.IsPlayerMy()).ToList();
-        }
 
-        public List<Region> RegionsOther()
-        {
-            return regions.Where(r => r.IsPlayerOther()).ToList();
-        }
-
-        public int CountRegionsMy
-        {
-            get { return regions.Count(r => r.IsPlayerMy()); }
-        }
-
-        public int CountRegionsNotMy
-        {
-            get { return CountRegions - regions.Count(r => r.IsPlayerMy()); }
-        }
-
-        public int CountRegionsOther
-        {
-            get { return regions.Count(r => r.IsPlayerOther()); }
-        }
 
         #endregion
 

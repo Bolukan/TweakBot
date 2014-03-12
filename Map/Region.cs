@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace TweakBot
 {
@@ -115,5 +116,38 @@ namespace TweakBot
         }
 
         #endregion
+
+        // Count
+        static public int Count(List<Region> regions, Player player)
+        {
+            return regions.Count(r => r.Player == player);
+        }
+
+        static public int Count(Player player)
+        {
+            return Map.GetInstance().Regions.Count(r => r.Player == player);
+        }
+
+        static public int Count(SuperRegion superRegion, Player player)
+        {
+            return superRegion.Regions.Count(r => r.Player == player);
+        }
+
+        // Players
+        static public List<Region> Regions(List<Region> regions, Player player)
+        {
+            return regions.Where(r => r.player == player).ToList();
+        }
+
+        static public List<Region> Regions(Player player)
+        {
+            return Map.GetInstance().Regions.Where(r => r.player == player).ToList();
+        }
+
+        static public List<Region> Regions(SuperRegion superRegion, Player player)
+        {
+            return superRegion.Regions.Where(r => r.player == player).ToList();
+        }
+    
     }
 }

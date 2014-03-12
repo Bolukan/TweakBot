@@ -95,9 +95,9 @@ namespace TweakBot
         /// 
         /// </summary>
         /// <returns></returns>
-        public List<Region> GetRegions()
+        public List<Region> Regions
         {
-            return regions;
+            get { return regions; }
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace TweakBot
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Region GetRegion(int id)
+        public Region Region(int id)
         {
             // search
             try
@@ -120,10 +120,10 @@ namespace TweakBot
             }
         }
         
-        public int CountRegionsMy
-        {
-            get { return regions.Count(r => r.IsPlayerMy()); }
-        }
+//        public int CountRegionsMy
+//        {
+//            get { return regions.Count(r => r.IsPlayerMy()); }
+//        }
 
         #endregion
 
@@ -177,7 +177,7 @@ namespace TweakBot
 
         public void ResetTurn()
         {
-            foreach (Region myRegion in Map.GetInstance().GetRegions())
+            foreach (Region myRegion in Map.GetInstance().Regions)
             {
                 myRegion.ResetTurn();
             }

@@ -58,7 +58,7 @@ namespace TweakBot
                     {
                         try
                         {
-                            Map.GetInstance().GetRegion(int.Parse(parts[i++])).UpdateMap(Player.GetPlayer(parts[i++]), int.Parse(parts[i]));
+                            Map.GetInstance().Region(int.Parse(parts[i++])).UpdateMap(Player.GetPlayer(parts[i++]), int.Parse(parts[i]));
                         }
                         catch (Exception e)
                         {
@@ -106,11 +106,11 @@ namespace TweakBot
                             {
                                 try
                                 {
-                                    int regionId = int.Parse(parts[i]);
-                                    i++;
-                                    int superRegionId = int.Parse(parts[i]);
-                                    SuperRegion superRegion = Map.GetInstance().GetSuperRegion(superRegionId);
+                                    int regionId = int.Parse(parts[i++]);
+                                    SuperRegion superRegion = Map.GetInstance().GetSuperRegion(int.Parse(parts[i]));
+                                    // Create new Region
                                     Region newRegion = new Region(regionId, superRegion);
+                                    // Add Region to Map en SuperRegion
                                     Map.GetInstance().AddRegion(newRegion);
                                     superRegion.AddRegion(newRegion);
                                 }
@@ -127,11 +127,10 @@ namespace TweakBot
                             {
                                 try
                                 {
-                                    Region region = Map.GetInstance().GetRegion(int.Parse(parts[i]));
-                                    i++;
+                                    Region region = Map.GetInstance().Region(int.Parse(parts[i++]));
                                     foreach (String neighbourStr in parts[i].Split(','))
                                     {
-                                        Region neighbour = Map.GetInstance().GetRegion(int.Parse(neighbourStr));
+                                        Region neighbour = Map.GetInstance().Region(int.Parse(neighbourStr));
                                         Map.GetInstance().AddPath(region, neighbour);
                                     }
                                 }

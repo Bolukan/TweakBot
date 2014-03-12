@@ -6,7 +6,13 @@ using System.Text;
 namespace TweakBot
 {
     /// <summary>
-    /// Contains data of the world
+    /// Contains data of the world at current turn
+    ///  Turn
+    /// go place_armies
+    /// go attack/transfer
+    /// settings starting_armies
+    /// update_map
+    /// opponent_moves
     /// </summary>
     
     class BotState
@@ -70,8 +76,8 @@ namespace TweakBot
         public void CalcTurn()
         {
             Map myMap = Map.GetInstance();
-            myRegions = myMap.GetRegions().FindAll(R => R.IsPlayerMy());
-            otherRegions = myMap.GetRegions().FindAll(R => R.IsPlayerOther());
+            myRegions = myMap.Regions.FindAll(R => R.IsPlayerMy());
+            otherRegions = myMap.Regions.FindAll(R => R.IsPlayerOther());
         }
 
         public List<Region> MyRegions()
@@ -91,26 +97,26 @@ namespace TweakBot
         //    return temp.ToString();
         //}
 
-        public String Attack()
-        {
-            StringBuilder temp = new StringBuilder();
-            Random rnd = Rand.Rnd();
-            Region myRegion = myRegions[rnd.Next(myRegions.Count())];
-            foreach(Region neighbour in myRegion.Neighbours)
-            {
-                if (((neighbour.Armies * 2) < myRegion.Armies) && (neighbour.IsPlayerOther()))
-                {
-                    temp.Append(Player.Me().Name + " attack/transfer " + myRegion.Id.ToString() + " " + neighbour.Id.ToString() + " " + String.Concat(myRegion.Armies - 1));
-                    temp.Append(", ");
-                }
-            }
+        //public String Attack()
+        //{
+        //    StringBuilder temp = new StringBuilder();
+        //    Random rnd = Rand.Rnd();
+        //    Region myRegion = myRegions[rnd.Next(myRegions.Count())];
+        //    foreach(Region neighbour in myRegion.Neighbours)
+        //    {
+        //        if (((neighbour.Armies * 2) < myRegion.Armies) && (neighbour.IsPlayerOther()))
+        //        {
+        //            temp.Append(Player.Me().Name + " attack/transfer " + myRegion.Id.ToString() + " " + neighbour.Id.ToString() + " " + String.Concat(myRegion.Armies - 1));
+        //            temp.Append(", ");
+        //        }
+        //    }
 
-            if (temp.Length == 0) return "No moves";
-                //temp.Append(Player.Name(2) + " place_armies " + myRegions.First(R => R.IsPlayerMine()).GetId().ToString() + " 1");
-                //if (i > 1) temp.Append(", ");
+        //    if (temp.Length == 0) return "No moves";
+        //        //temp.Append(Player.Name(2) + " place_armies " + myRegions.First(R => R.IsPlayerMine()).GetId().ToString() + " 1");
+        //        //if (i > 1) temp.Append(", ");
        
-            return temp.ToString().TrimEnd(',');
-        }
+        //    return temp.ToString().TrimEnd(',');
+        //}
 
     } // class
 } // nameSpace
