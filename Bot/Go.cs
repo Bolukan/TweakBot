@@ -66,10 +66,10 @@ namespace TweakBot
 
         public static void PlaceArmiesOnMIXED()
         {
-            List<SuperRegion> sr_MIXED = Map.GetInstance().SuperRegions.Where(sr => (sr.TurnTactics == 2 || sr.TurnTactics ==3)).ToList();
+            List<SuperRegion> sr_MIXED = Map.GetInstance().SuperRegions.Where(sr => (sr.TurnTactics == 2 || sr.TurnTactics == 3)).ToList();
             if (sr_MIXED.Count == 0) return;
 
-            SuperRegion sr_BEST = sr_MIXED.OrderByDescending(sr => (sr.Regions.Count - Region.Count(sr, Player.Me()))).First();
+            SuperRegion sr_BEST = sr_MIXED.OrderBy(sr => (sr.Regions.Count - Region.Count(sr, Player.Me()))).First();
 
             AddPlaceArmies(BestTarget(sr_BEST), BotState.GetInstance().StartingArmies);
         }
@@ -145,7 +145,7 @@ namespace TweakBot
 
         static public void MoveAwayFromInland()
         {
-            List<Region> RegionsInland = RegionsMy.Where(R => R.Neighbours.Count(N => ! N.IsPlayerMy()) == 0).ToList();
+            List<Region> RegionsInland = RegionsMy.Where(R => R.Armies > 0 && R.Neighbours.Count(N => ! N.IsPlayerMy()) == 0).ToList();
             if (RegionsInland.Count > 0)
             foreach(Region myRegion in RegionsInland)
             {
