@@ -81,6 +81,16 @@ namespace TweakBot
             
             Commands = new List<String>();
             PlaceArmiesOnMIXED();
+            if (BotState.GetInstance().StartingArmies > 0)
+            {
+                List<Region> NewRegion = Region.Regions(Player.Me()).OrderByDescending(R => Region.Count(R.Neighbours, Player.Other())).ToList();
+                if (NewRegion.Count > 0) AddPlaceArmies(NewRegion.First(), BotState.GetInstance().StartingArmies);
+            }
+            if (BotState.GetInstance().StartingArmies > 0)
+            {
+                List<Region> NewRegion = Region.Regions(Player.Me()).OrderByDescending(R => Region.Count(R.Neighbours, Player.Neutral())).ToList();
+                if (NewRegion.Count > 0) AddPlaceArmies(NewRegion.First(), BotState.GetInstance().StartingArmies);
+            }
 
             return String.Join(", ", Commands);
         }
@@ -91,7 +101,8 @@ namespace TweakBot
             
             BestAttack();
             MoveAwayFromInland();
-            
+
+            if (Commands.Count == 0) return "No moves";
             return String.Join(", ", Commands);
         }
 
@@ -118,34 +129,51 @@ namespace TweakBot
 
         static public void BestAttack()
         {
-            List<SuperRegion> sr_MIXED = Map.GetInstance().SuperRegions.Where(sr => (sr.TurnTactics == 2 || sr.TurnTactics == 3)).ToList();
-            if (sr_MIXED.Count == 0) return;
-
-            SuperRegion sr_BEST = sr_MIXED.OrderByDescending(sr => (sr.Regions.Count - Region.Count(sr, Player.Me()))).First();
-           
-            Region BestRegion = BestTarget(sr_BEST);
-
-            // Other
-            List<Region> RegionsOther = BestRegion.Neighbours.Where(R => R.IsPlayerOther()).OrderByDescending(R2 => R2.Armies).ToList();
-            if (RegionsOther.Count > 0)
+            foreach (SuperRegion SR in Map.GetInstance().SuperRegions)
             {
-                if (RegionsOther.First().Armies < (BestRegion.Armies + 1))
+                if (SR.TurnTactics == 3) // MIXED NEUTRAL
                 {
-                    AddAttackTransfer(BestRegion, RegionsOther.First(), BestRegion.Armies - 1);
-                    BestRegion.Armies = 1;
+                    List<Region> R_My = Region.Regions(SR.Regions, Player.Me()).OrderByDescending(R => R.Armies).ToList();
+                    foreach (Region R in R_My)
+                    {
+                        while (R.Armies > 4 && Region.Count(R.Neighbours.Intersect(SR.Regions).ToList(), Player.Neutral()) > 0)
+                        {
+                            AddAttackTransfer(R, Region.Regions(R.Neighbours.Intersect(SR.Regions).ToList(), Player.Neutral()).First(), R.Armies - 1); // toch met alles
+                        }
+                    }
                 }
-            }
-            else if (Region.Count(BestRegion.Neighbours, Player.Neutral()) > 0)
-            {
-                Region RegionNeutral = Region.Regions(BestRegion.Neighbours, Player.Neutral()).First();
-                AddAttackTransfer(BestRegion, RegionNeutral, BestRegion.Armies - 1);
-                BestRegion.Armies = 1;
+
+                if (SR.TurnTactics == 2) // MIXED HOSTILE
+                {
+                    List<Region> R_My = Region.Regions(SR.Regions, Player.Me()).OrderByDescending(R => R.Armies).ToList();
+                    foreach (Region R in R_My)
+                    {
+                        List<Region> R_Other = Region.Regions(R.Neighbours.Intersect(SR.Regions).ToList(), Player.Other()).OrderByDescending(R2 => R2.Armies).ToList();
+                        if (R_Other.Count > 0 && R_Other.First().Armies < R.Armies)
+                        {
+                            AddAttackTransfer(R, R_Other.First(), R.Armies - 1);
+                        }
+                    }
+                }
+
+                if (SR.TurnTactics == 1) // DEFEND
+                {
+                    // Regions with neighbours not me
+                    List<Region> R_My = SR.Regions.Where(R => R.Neighbours.Count > Region.Count(R.Neighbours, Player.Me())).OrderByDescending(R => R.Armies).ToList();
+                    if (R_My.Count > 0)
+                        foreach(Region R_WithN in R_My)
+                        {
+                            Region R_Other = R_WithN.Neighbours.OrderByDescending(N => N.Armies).First();
+                            if (R_WithN.Armies > 5 && (R_WithN.Armies - 5) > (2 * R_Other.Armies) && (R_Other.Player == Player.Other() || R_Other.Player == Player.Neutral()))
+                                AddAttackTransfer(R_WithN, R_Other, R_WithN.Armies - 5);
+                    }
+                }
             }
         }
 
         static public void MoveAwayFromInland()
         {
-            List<Region> RegionsInland = RegionsMy.Where(R => R.Armies > 0 && R.Neighbours.Count(N => ! N.IsPlayerMy()) == 0).ToList();
+            List<Region> RegionsInland = Region.Regions(Player.Me()).Where(r => r.Armies > 1 && Region.Count(r.Neighbours, Player.Me()) == r.Neighbours.Count()).ToList();
             if (RegionsInland.Count > 0)
             foreach(Region myRegion in RegionsInland)
             {
