@@ -63,6 +63,7 @@
     <Compile Include="Bot\BotParser.cs" />
     <Compile Include="Bot\BotState.cs" />
     <Compile Include="Bot\Go.cs" />
+    <Compile Include="Bot\Math.cs" />
     <Compile Include="Bot\Opponent_moves.cs" />
     <Compile Include="Bot\Random.cs" />
     <Compile Include="Map\Map.cs" />

@@ -167,8 +167,8 @@ namespace TweakBot
                     if (R_My.Count > 0)
                         foreach(Region R_WithN in R_My)
                         {
-                            Region R_Other = R_WithN.Neighbours.Where(N => N.Player != PLAYER.ME).OrderByDescending(N => N.Armies).First();
-                            if (R_WithN.Armies > 5 && ((5 * (R_WithN.Armies - 5)) > (6 * R_Other.Armies)))
+                            Region R_Other = R_WithN.Neighbours.Where(N => N.Player != PLAYER.ME).OrderBy(N => N.Armies).First();
+                            if (R_WithN.Armies > 5 && ((R_WithN.Armies - 5) > (2 * R_Other.Armies)))
                                 AddAttackTransfer(R_WithN, R_Other, R_WithN.Armies - 5);
                     }
                 }
