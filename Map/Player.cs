@@ -9,6 +9,7 @@ namespace TweakBot
         public const int ME = 4;
         public const int OTHER = 8;
         public const int NOT_ME = 11;
+        public const int ALL = 15;
 
         private const String NAME_NEUTRAL = "neutral";
         private const String NAME_UNKNOWN = "unknown";

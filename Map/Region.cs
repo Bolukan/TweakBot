@@ -117,37 +117,7 @@ namespace TweakBot
 
         #endregion
 
-        // Count
-        static public int Count(List<Region> regions, int player)
-        {
-            return regions.Count(r => r.Player == player);
-        }
 
-        static public int Count(int player)
-        {
-            return Map.GetInstance().Regions.Count(r => r.Player == player);
-        }
-
-        static public int Count(SuperRegion superRegion, int player)
-        {
-            return superRegion.Regions.Count(r => r.Player == player);
-        }
-
-        // Players
-        static public List<Region> Regions(List<Region> regions, int player)
-        {
-            return regions.Where(r => r.player == player).ToList();
-        }
-
-        static public List<Region> Regions(int player)
-        {
-            return Map.GetInstance().Regions.Where(r => r.player == player).ToList();
-        }
-
-        static public List<Region> Regions(SuperRegion superRegion, int player)
-        {
-            return superRegion.Regions.Where(r => r.player == player).ToList();
-        }
-    
+ 
     }
 }

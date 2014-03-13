@@ -39,7 +39,7 @@ namespace TweakBot
                             BotState.GetInstance().StartingArmies = int.Parse(parts[2]);
                             break;
                         case "your_bot":
-                            PLAYER.NameMy = parts[2];
+                            PLAYER.NameMe = parts[2];
                             break;
                         case "opponent_bot":
                             PLAYER.NameOther = parts[2];

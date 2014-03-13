@@ -12,14 +12,14 @@ namespace TweakBot
 
         static private void CalculateInfo()
         {
-            RegionsMy = Region.Regions(PLAYER.ME);
+            RegionsMy = Map.GetInstance().RWhere(PLAYER.ME);
 
             foreach (SuperRegion sr in Map.GetInstance().SuperRegions)
             {
-                List<Region> regionsMe = Region.Regions(sr, PLAYER.ME);
-                List<Region> regionsOther = Region.Regions(sr, PLAYER.OTHER);
-                List<Region> regionsNeutral = Region.Regions(sr, PLAYER.NEUTRAL);
-                List<Region> regionsUnknown = Region.Regions(sr, PLAYER.UNKNOWN);
+                List<Region> regionsMe = sr.RWhere(PLAYER.ME);
+                List<Region> regionsOther = sr.RWhere(PLAYER.OTHER);
+                List<Region> regionsNeutral = sr.RWhere(PLAYER.NEUTRAL);
+                List<Region> regionsUnknown = sr.RWhere(PLAYER.UNKNOWN);
 
                 // Part me
                 if (regionsMe.Count > 0) 
@@ -69,7 +69,7 @@ namespace TweakBot
             List<SuperRegion> sr_MIXED = Map.GetInstance().SuperRegions.Where(sr => (sr.TurnTactics == 2 || sr.TurnTactics == 3)).ToList();
             if (sr_MIXED.Count == 0) return;
 
-            SuperRegion sr_BEST = sr_MIXED.OrderBy(sr => (sr.Regions.Count - Region.Count(sr, PLAYER.ME))).First();
+            SuperRegion sr_BEST = sr_MIXED.OrderBy(sr => (sr.RCount(PLAYER.NOT_ME))).First();
 
             AddPlaceArmies(BestTarget(sr_BEST), BotState.GetInstance().StartingArmies);
         }
@@ -83,12 +83,12 @@ namespace TweakBot
             PlaceArmiesOnMIXED();
             if (BotState.GetInstance().StartingArmies > 0)
             {
-                List<Region> NewRegion = Region.Regions(PLAYER.ME).OrderByDescending(R => Region.Count(R.Neighbours, PLAYER.OTHER)).ToList();
+                List<Region> NewRegion = Map.GetInstance().RWhere(PLAYER.ME).OrderByDescending(R => R.Neighbours.Count(N => N.Player == PLAYER.OTHER)).ToList();
                 if (NewRegion.Count > 0) AddPlaceArmies(NewRegion.First(), BotState.GetInstance().StartingArmies);
             }
             if (BotState.GetInstance().StartingArmies > 0)
             {
-                List<Region> NewRegion = Region.Regions(PLAYER.ME).OrderByDescending(R => Region.Count(R.Neighbours, PLAYER.NEUTRAL)).ToList();
+                List<Region> NewRegion = Map.GetInstance().RWhere(PLAYER.ME).OrderByDescending(R => R.Neighbours.Count(N => N.Player == PLAYER.NEUTRAL)).ToList();
                 if (NewRegion.Count > 0) AddPlaceArmies(NewRegion.First(), BotState.GetInstance().StartingArmies);
             }
 
@@ -109,20 +109,21 @@ namespace TweakBot
         // SuperRegions with least regions not mine
         static public Region BestTarget(SuperRegion SR)
         {
-            return Region.Regions(SR, PLAYER.ME).OrderByDescending(R => 
-                   (Region.Count(R.Neighbours, PLAYER.OTHER) * 2 + Region.Count(R.Neighbours, PLAYER.NEUTRAL))).First();
+            return SR.RWhere(PLAYER.NOT_ME).SelectMany(Target => Target.Neighbours).Where(N => N.Player == PLAYER.ME).OrderByDescending(R => 
+                   R.Neighbours.Count(N => N.Player == PLAYER.OTHER) * 2 + 
+                   R.Neighbours.Count(N => N.Player == PLAYER.NEUTRAL)).First();
         }
 
         static public void AddPlaceArmies(Region region, int armies)
         {
-            Commands.Add(PLAYER.NameMy + " place_armies " + region.Id.ToString() + " " + armies.ToString());
+            Commands.Add(PLAYER.NameMe + " place_armies " + region.Id.ToString() + " " + armies.ToString());
             region.AddArmies(armies);
             BotState.GetInstance().StartingArmies -= armies;
         }
         
         static private void AddAttackTransfer(Region SourceRegion, Region TargetRegion, int armies)
         {
-            Commands.Add(PLAYER.NameMy + " attack/transfer " + SourceRegion.Id.ToString() + " " + TargetRegion.Id.ToString() + " " + armies.ToString());
+            Commands.Add(PLAYER.NameMe + " attack/transfer " + SourceRegion.Id.ToString() + " " + TargetRegion.Id.ToString() + " " + armies.ToString());
             SourceRegion.AddArmies(-armies);
         }
         
@@ -133,22 +134,22 @@ namespace TweakBot
             {
                 if (SR.TurnTactics == 3) // MIXED NEUTRAL
                 {
-                    List<Region> R_My = Region.Regions(SR.Regions, PLAYER.ME).OrderByDescending(R => R.Armies).ToList();
+                    List<Region> R_My = SR.RWhere(PLAYER.ME).OrderByDescending(R => R.Armies).ToList();
                     foreach (Region R in R_My)
                     {
-                        while (R.Armies > 4 && Region.Count(R.Neighbours.Intersect(SR.Regions).ToList(), PLAYER.NEUTRAL) > 0)
+                        while (R.Armies > 4 && R.Neighbours.Intersect(SR.Regions).Count(N => N.Player == PLAYER.NEUTRAL) > 0)
                         {
-                            AddAttackTransfer(R, Region.Regions(R.Neighbours.Intersect(SR.Regions).ToList(), PLAYER.NEUTRAL).First(), R.Armies - 1); // toch met alles
+                            AddAttackTransfer(R, R.Neighbours.Intersect(SR.Regions).Where(N => N.Player == PLAYER.NEUTRAL).First(), 4); // toch met alles
                         }
                     }
                 }
 
                 if (SR.TurnTactics == 2) // MIXED HOSTILE
                 {
-                    List<Region> R_My = Region.Regions(SR.Regions, PLAYER.ME).OrderByDescending(R => R.Armies).ToList();
+                    List<Region> R_My = SR.RWhere(PLAYER.ME).OrderByDescending(R => R.Armies).ToList();
                     foreach (Region R in R_My)
                     {
-                        List<Region> R_Other = Region.Regions(R.Neighbours.Intersect(SR.Regions).ToList(), PLAYER.OTHER).OrderByDescending(R2 => R2.Armies).ToList();
+                        List<Region> R_Other = R.Neighbours.Intersect(SR.Regions).Where(N => N.Player == PLAYER.OTHER).OrderByDescending(R2 => R2.Armies).ToList();
                         if (R_Other.Count > 0 && R_Other.First().Armies < R.Armies)
                         {
                             AddAttackTransfer(R, R_Other.First(), R.Armies - 1);
@@ -159,7 +160,7 @@ namespace TweakBot
                 if (SR.TurnTactics == 1) // DEFEND
                 {
                     // Regions with neighbours not me
-                    List<Region> R_My = SR.Regions.Where(R => R.Neighbours.Count > Region.Count(R.Neighbours, PLAYER.ME)).OrderByDescending(R => R.Armies).ToList();
+                    List<Region> R_My = SR.Regions.Where(R => R.Neighbours.Count(N => N.Player != PLAYER.ME) > 0).OrderByDescending(R => R.Armies).ToList();
                     if (R_My.Count > 0)
                         foreach(Region R_WithN in R_My)
                         {
@@ -173,7 +174,7 @@ namespace TweakBot
 
         static public void MoveAwayFromInland()
         {
-            List<Region> RegionsInland = Region.Regions(PLAYER.ME).Where(r => r.Armies > 1 && Region.Count(r.Neighbours, PLAYER.ME) == r.Neighbours.Count()).ToList();
+            List<Region> RegionsInland = Map.GetInstance().RWhere(PLAYER.ME).Where(r => r.Armies > 1 && BaseRegions.RCount(PLAYER.NOT_ME, r.Neighbours) == 0).ToList();
             if (RegionsInland.Count > 0)
             foreach(Region myRegion in RegionsInland)
             {
