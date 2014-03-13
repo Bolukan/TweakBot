@@ -68,6 +68,7 @@
     <Compile Include="Map\Map.cs" />
     <Compile Include="Map\Player.cs" />
     <Compile Include="Map\Path.cs" />
+    <Compile Include="Map\BaseRegions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

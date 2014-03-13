@@ -4,11 +4,10 @@ using System.Linq;
 
 namespace TweakBot
 {
-    class SuperRegion
+    class SuperRegion : BaseRegions
     {
         private int id;
         private int armiesReward;
-        private List<Region> regions;
 
         // Extra statistics
         private List<Region> neighbours; // neighbours from regions but not own regions
@@ -22,11 +21,10 @@ namespace TweakBot
         /// </summary>
         /// <param name="id">superregion id</param>
         /// <param name="bonusArmies">rewards</param>
-        public SuperRegion(int id, int armiesReward)
+        public SuperRegion(int id, int armiesReward) 
         {
             this.id = id;
             this.armiesReward = armiesReward;
-            this.regions = new List<Region>();
         }
 
         public int Id
@@ -38,23 +36,6 @@ namespace TweakBot
         {
             get { return armiesReward; }
 
-        }
-
-        public List<Region> Regions
-        {
-            get { return regions; }
-        }
-
-        /// <summary>
-        /// setup_map regions
-        /// </summary>
-        /// <param name="region">Region</param>
-        public void AddRegion(Region region)
-        {
-            if (!this.regions.Contains(region))
-            {
-                this.regions.Add(region);
-            }
         }
  
 #endregion
