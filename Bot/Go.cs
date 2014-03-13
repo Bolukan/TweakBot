@@ -134,12 +134,15 @@ namespace TweakBot
             {
                 if (SR.TurnTactics == 3) // MIXED NEUTRAL
                 {
-                    List<Region> R_My = SR.RWhere(PLAYER.ME).OrderByDescending(R => R.Armies).ToList();
-                    foreach (Region R in R_My)
+                    // Kies regio's niet van mij
+                    List<Region> R_NotMe = SR.RWhere(PLAYER.NOT_ME);
+                    if (R_NotMe.Count > 0) 
                     {
-                        while (R.Armies > 4 && R.Neighbours.Intersect(SR.Regions).Count(N => N.Player == PLAYER.NEUTRAL) > 0)
+                        foreach (Region R in R_NotMe)
                         {
-                            AddAttackTransfer(R, R.Neighbours.Intersect(SR.Regions).Where(N => N.Player == PLAYER.NEUTRAL).First(), 4); // toch met alles
+                            // zoek of de buren van mij zijn
+                            List<Region> R_Me = R.Neighbours.Where(N => N.Player == PLAYER.ME && N.Armies > 5).OrderByDescending(N => N.Armies).ToList();
+                            if (R_Me.Count > 0) AddAttackTransfer(R_Me.First(), R, 5); // toch met alles
                         }
                     }
                 }
@@ -160,12 +163,12 @@ namespace TweakBot
                 if (SR.TurnTactics == 1) // DEFEND
                 {
                     // Regions with neighbours not me
-                    List<Region> R_My = SR.Regions.Where(R => R.Neighbours.Count(N => N.Player != PLAYER.ME) > 0).OrderByDescending(R => R.Armies).ToList();
+                    List<Region> R_My = SR.RWhere(PLAYER.ME).Where(R => R.Neighbours.Count(N => N.Player != PLAYER.ME) > 0).OrderByDescending(R => R.Armies).ToList();
                     if (R_My.Count > 0)
                         foreach(Region R_WithN in R_My)
                         {
-                            Region R_Other = R_WithN.Neighbours.OrderByDescending(N => N.Armies).First();
-                            if (R_WithN.Armies > 5 && (R_WithN.Armies - 5) > (2 * R_Other.Armies) && (R_Other.Player == PLAYER.OTHER || R_Other.Player == PLAYER.NEUTRAL))
+                            Region R_Other = R_WithN.Neighbours.Where(N => N.Player != PLAYER.ME).OrderByDescending(N => N.Armies).First();
+                            if (R_WithN.Armies > 5 && ((5 * (R_WithN.Armies - 5)) > (6 * R_Other.Armies)))
                                 AddAttackTransfer(R_WithN, R_Other, R_WithN.Armies - 5);
                     }
                 }

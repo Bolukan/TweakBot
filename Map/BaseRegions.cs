@@ -15,7 +15,11 @@ namespace TweakBot
 
         public BaseRegions(List<Region> regions)
         {
-            this.regions = regions;
+            this.regions = new List<Region>();
+            foreach (Region region in regions)
+            {
+                AddRegion(region);
+            }
         }
 
         public void AddRegion(Region region)
