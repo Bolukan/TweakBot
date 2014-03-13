@@ -2,87 +2,54 @@
 
 namespace TweakBot
 {
-    enum Players : int { Unknown, Neutral, Me, Other }
-
-    class Player
+    class PLAYER
     {
-        #region static
+        public const int UNKNOWN = 1;
+        public const int NEUTRAL = 2;
+        public const int ME = 4;
+        public const int OTHER = 8;
+        public const int NOT_ME = 11;
 
-        static Player[] players;
+        private const String NAME_NEUTRAL = "neutral";
+        private const String NAME_UNKNOWN = "unknown";
 
-        static Player()
+        static String nameMe;
+        static String nameOther;
+        
+        static PLAYER()
         {
-            players = new Player[4];
-            players[0] = new Player(0, "unknown");
-            players[1] = new Player(1, "neutral");
-            players[2] = new Player(2, "me");
-            players[3] = new Player(3, "other");
+            // Engine will assign player1|player2 or player2|player1
+            nameMe = "me";
+            nameOther = "other";
         }
 
-        public static void SetMyName(String myName)
+        public static String NameMe
         {
-            players[2].Name = myName;
+            get { return nameMe; }
+            set { nameMe = value; }
         }
 
-        public static void SetOtherName(String otherName)
+        public static String NameOther
         {
-            players[3].Name = otherName;
+            get { return nameOther; }
+            set { nameOther = value; }
         }
 
-        public static Player GetPlayer(String name)
+        public static int GetPlayer(String name)
         {
-            if (players[2].Name == name) return players[2];
-            if (players[3].Name == name) return players[3];
-            if (players[1].Name == name) return players[1];
-            return players[0];
+            if (name == nameMe) return PLAYER.ME;
+            if (name == nameOther) return PLAYER.OTHER;
+            if (name == NAME_NEUTRAL) return PLAYER.NEUTRAL;
+            return PLAYER.UNKNOWN;
         }
 
-        public static Player GetPlayer(int id)
+        public static String GetPlayer(int id)
         {
-            if ((id > 0) && (id < 4)) return players[id];
-            return players[0];
+            if (id == PLAYER.ME) return nameMe;
+            if (id == PLAYER.OTHER) return nameOther;
+            if (id == PLAYER.NEUTRAL) return NAME_NEUTRAL;
+            return NAME_UNKNOWN;
         }
 
-        public static Player Me()
-        {
-            return players[2];
-        }
-
-        public static Player Other()
-        {
-            return players[3];
-        }
-
-        public static Player Neutral()
-        {
-            return players[1];
-        }
-
-        public static Player Unknown()
-        {
-            return players[0];
-        }
-
-        #endregion
-
-        int id;
-        String name;
-
-        public Player(int id, String name)
-        {
-            this.id = id;
-            this.name = name;
-        }
-
-        public int Id
-        {
-            get { return id; }
-        }
-
-        public String Name
-        {
-            get { return name; }
-            set { name = value; }
-        }
     }
 }

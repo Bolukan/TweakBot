@@ -91,7 +91,7 @@ namespace TweakBot
         //    Random rnd = Rand.Rnd();
         //    for (int i = this.starting_armies; i > 0; i--)
         //    {
-        //        temp.Append(Player.Me().Name + " place_armies " + myRegions[rnd.Next(myRegions.Count())].Id.ToString() + " 1");
+        //        temp.Append(PLAYER.NAMEMY + " place_armies " + myRegions[rnd.Next(myRegions.Count())].Id.ToString() + " 1");
         //        if (i > 1) temp.Append(", ");
         //    }
         //    return temp.ToString();
@@ -106,7 +106,7 @@ namespace TweakBot
         //    {
         //        if (((neighbour.Armies * 2) < myRegion.Armies) && (neighbour.IsPlayerOther()))
         //        {
-        //            temp.Append(Player.Me().Name + " attack/transfer " + myRegion.Id.ToString() + " " + neighbour.Id.ToString() + " " + String.Concat(myRegion.Armies - 1));
+        //            temp.Append(PLAYER.ME.Name + " attack/transfer " + myRegion.Id.ToString() + " " + neighbour.Id.ToString() + " " + String.Concat(myRegion.Armies - 1));
         //            temp.Append(", ");
         //        }
         //    }

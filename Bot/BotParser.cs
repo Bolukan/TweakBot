@@ -39,10 +39,10 @@ namespace TweakBot
                             BotState.GetInstance().StartingArmies = int.Parse(parts[2]);
                             break;
                         case "your_bot":
-                            Player.SetMyName(parts[2]);
+                            PLAYER.NameMy = parts[2];
                             break;
                         case "opponent_bot":
-                            Player.SetOtherName(parts[2]);
+                            PLAYER.NameOther = parts[2];
                             break;
                         default:
                             // EXCEPTION
@@ -58,7 +58,7 @@ namespace TweakBot
                     {
                         try
                         {
-                            Map.GetInstance().Region(int.Parse(parts[i++])).UpdateMap(Player.GetPlayer(parts[i++]), int.Parse(parts[i]));
+                            Map.GetInstance().Region(int.Parse(parts[i++])).UpdateMap(PLAYER.GetPlayer(parts[i++]), int.Parse(parts[i]));
                         }
                         catch (Exception e)
                         {

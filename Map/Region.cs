@@ -13,7 +13,7 @@ namespace TweakBot
         
         // round specific
         private int armies;
-        private Player player;
+        private int player;
 
         #region initial values
 
@@ -69,7 +69,7 @@ namespace TweakBot
             set { armies = value; }
         }
 
-        public Player Player
+        public int Player
         {
             get { return player; }
         }
@@ -77,7 +77,7 @@ namespace TweakBot
         public void ResetTurn()
         {
             Armies = 0;
-            player = Player.Unknown();
+            player = PLAYER.UNKNOWN;
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace TweakBot
         /// </summary>
         /// <param name="Name"></param>
         /// <param name="armies"></param>
-        public void UpdateMap(Player player, int armies)
+        public void UpdateMap(int player, int armies)
         {
             Armies = armies;
             this.player = player;
@@ -97,54 +97,54 @@ namespace TweakBot
 
         public bool IsPlayerUnknown()
         {
-            return player.Id == 0;
+            return player == PLAYER.UNKNOWN;
         }
 
         public bool IsPlayerNeutral()
         {
-            return player.Id == 1;
+            return player == PLAYER.NEUTRAL;
         }
 
         public bool IsPlayerMy()
         {
-            return player.Id == 2;
+            return player == PLAYER.ME;
         }
 
         public bool IsPlayerOther()
         {
-            return player.Id == 3;
+            return player == PLAYER.OTHER;
         }
 
         #endregion
 
         // Count
-        static public int Count(List<Region> regions, Player player)
+        static public int Count(List<Region> regions, int player)
         {
             return regions.Count(r => r.Player == player);
         }
 
-        static public int Count(Player player)
+        static public int Count(int player)
         {
             return Map.GetInstance().Regions.Count(r => r.Player == player);
         }
 
-        static public int Count(SuperRegion superRegion, Player player)
+        static public int Count(SuperRegion superRegion, int player)
         {
             return superRegion.Regions.Count(r => r.Player == player);
         }
 
         // Players
-        static public List<Region> Regions(List<Region> regions, Player player)
+        static public List<Region> Regions(List<Region> regions, int player)
         {
             return regions.Where(r => r.player == player).ToList();
         }
 
-        static public List<Region> Regions(Player player)
+        static public List<Region> Regions(int player)
         {
             return Map.GetInstance().Regions.Where(r => r.player == player).ToList();
         }
 
-        static public List<Region> Regions(SuperRegion superRegion, Player player)
+        static public List<Region> Regions(SuperRegion superRegion, int player)
         {
             return superRegion.Regions.Where(r => r.player == player).ToList();
         }
