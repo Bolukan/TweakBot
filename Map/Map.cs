@@ -103,7 +103,9 @@ namespace TweakBot
         }
 
         #endregion
-        
+
+        #region Initial Calculations
+
         // calculate further map statistics
         public void CalculateInitial()
         {
@@ -113,7 +115,9 @@ namespace TweakBot
             foreach (Region region in regions)
                 region.CalculateInitial();
         }
-        
+
+        #endregion
+
         /// <summary>
         /// static list of favorites regions
         /// </summary>
@@ -139,7 +143,7 @@ namespace TweakBot
         
         public void CalcTurn()
         {
-            BotState.GetInstance().CalcTurn();
+        //    BotState.GetInstance().CalcTurn();
         }
 
     }

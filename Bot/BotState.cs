@@ -7,12 +7,13 @@ namespace TweakBot
 {
     /// <summary>
     /// Contains data of the world at current turn
-    ///  Turn
-    /// go place_armies
-    /// go attack/transfer
-    /// settings starting_armies
-    /// update_map
-    /// opponent_moves
+    /// 
+    /// TURN:
+    ///  go place_armies
+    ///  go attack/transfer
+    ///  settings starting_armies
+    ///  update_map
+    ///  opponent_moves
     /// </summary>
     
     class BotState
@@ -38,9 +39,9 @@ namespace TweakBot
         // turn specific
         private int turn;
         private int starting_armies;
-        private List<Region> myRegions;
-        private List<Region> otherRegions;
-        private List<Region> neutralRegions;
+        //private List<Region> myRegions;
+        //private List<Region> otherRegions;
+        //private List<Region> neutralRegions;
 
         public BotState()
         {
@@ -59,9 +60,9 @@ namespace TweakBot
         private void NextTurn()
         {
             turn++;
-            myRegions = new List<Region>();
-            otherRegions = new List<Region>();
-            neutralRegions = new List<Region>();
+            //myRegions = new List<Region>();
+            //otherRegions = new List<Region>();
+            //neutralRegions = new List<Region>();
         }
 
         /// <summary>
@@ -73,17 +74,17 @@ namespace TweakBot
             return turn;
         }
 
-        public void CalcTurn()
-        {
-            Map myMap = Map.GetInstance();
-            myRegions = myMap.Regions.FindAll(R => R.Player == PLAYER.ME);
-            otherRegions = myMap.Regions.FindAll(R => R.Player == PLAYER.OTHER);
-        }
+        //public void CalcTurn()
+        //{
+        //    Map myMap = Map.GetInstance();
+        //    myRegions = myMap.Regions.FindAll(R => R.Player == PLAYER.ME);
+        //    otherRegions = myMap.Regions.FindAll(R => R.Player == PLAYER.OTHER);
+        //}
 
-        public List<Region> MyRegions()
-        {
-            return myRegions;
-        }
+        //public List<Region> MyRegions()
+        //{
+        //    return myRegions;
+        //}
 
         //public String Place_armies()
         //{
