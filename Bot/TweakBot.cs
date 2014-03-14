@@ -370,7 +370,7 @@ namespace TweakBot
         {
             while (true)
             {
-                Test();
+                // Test();
 
                 String line = Console.ReadLine().Trim();
                 Regex.Replace(line, "\\s+", " "); // replace multiple spaces for 1 space
