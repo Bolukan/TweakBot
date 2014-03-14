@@ -27,9 +27,12 @@ namespace TweakBot
             this.id = id;
             this.superRegion = superRegion;
             this.neighbours = new BaseRegions();
-            //
         }
 
+        /// <summary>
+        /// Add neighbour
+        /// </summary>
+        /// <param name="neighbour">Region</param>
         public void AddNeighbour(Region neighbour)
         {
             neighbours.AddRegion(neighbour);
@@ -44,40 +47,42 @@ namespace TweakBot
             get { return id; }
         }
 
+        /// <summary>
+        /// Return SuperRegion
+        /// </summary>
+        public SuperRegion SuperRegion
+        {
+            get { return superRegion; }
+        }
+
         public List<Region> Neighbours
         {
             get { return neighbours.Regions; }
         }
 
-        public SuperRegion GetSuperRegion
+        #endregion
+
+        #region Initial Calculations
+
+        /// <summary>
+        /// initial calculations
+        /// </summary>
+        public void CalculateInitial()
         {
-            get { return superRegion; }
         }
 
         #endregion
 
-        #region round specific
-
-        public void AddArmies(int extraArmies)
-        {
-            armies += extraArmies;
-        }
-
-        public int Armies
-        {
-            get { return armies; }
-            set { armies = value; }
-        }
-
-        public int Player
-        {
-            get { return player; }
-        }
+        #region Turn input
 
         public void ResetTurn()
         {
             Armies = 0;
-            player = PLAYER.UNKNOWN;
+            // keep Other
+            if ((player == PLAYER.ME) || (player == PLAYER.NEUTRAL))
+            {
+                player = PLAYER.UNKNOWN;
+            }
         }
 
         /// <summary>
@@ -91,35 +96,34 @@ namespace TweakBot
             this.player = player;
         }
 
+        public int Armies
+        {
+            get { return armies; }
+            set { armies = value; }
+        }
+
+        public int Player
+        {
+            get { return player; }
+        }
+        
+        public void AddArmies(int extraArmies)
+        {
+            armies += extraArmies;
+        }
+
         #endregion
 
-        //#region Player
+        #region Turn Calculations
 
-        //public bool IsPlayerUnknown()
-        //{
-        //    return player == PLAYER.UNKNOWN;
-        //}
-
-        //public bool IsPlayerNeutral()
-        //{
-        //    return player == PLAYER.NEUTRAL;
-        //}
-
-        //public bool IsPlayerMy()
-        //{
-        //    return player == PLAYER.ME;
-        //}
-
-        //public bool IsPlayerOther()
-        //{
-        //    return player == PLAYER.OTHER;
-        //}
-
-        //#endregion
-
-        public void CalculateInitial()
+        /// <summary>
+        /// turn calculations
+        /// </summary>
+        public void CalculateTurn()
         {
         }
+
+        #endregion
  
     }
 }

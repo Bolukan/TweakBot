@@ -43,36 +43,22 @@ namespace TweakBot
         #region Initial Calculations
 
         /// <summary>
-        /// initialise calculations!
+        /// initial calculations
         /// </summary>
         public void CalculateInitial()
         {
-            // CalcNeighbours();
         }
         
-//        private void CalcNeighbours()
-//        {
-            // get all neighbours of regions of superregion
-            // List<Region> AllNeighbours = regions.SelectMany(r => r.Neighbours).ToList();
-            // get all neighbours of superregion
-            // neighbours = AllNeighbours.Distinct().Except(regions).ToList();
-//        }
-
         #endregion
 
-        //public List<Region> Neighbours()
-        //{
-        //    return neighbours;
-        //}
+        #region Turn Calculations
 
-//        public int CountRegions
-//        {
-//            get { return regions.Count; }
-//        }
-
-        #region Turn dependent info
-
-
+        /// <summary>
+        /// turn calculations
+        /// </summary>
+        public void CalculateTurn()
+        {
+        }
 
         #endregion
 
