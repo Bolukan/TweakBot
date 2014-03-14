@@ -26,7 +26,11 @@ namespace TweakBot
 
         private List<SuperRegion> superRegions { get; set; }
         private List<Path> paths { get; set; }
-        
+
+        public BaseRegions RegionsMe;
+        public BaseRegions RegionsFront;
+        public BaseRegions RegionsInland;
+
         /// <summary>
         /// Initialise Map
         /// </summary>
@@ -143,14 +147,14 @@ namespace TweakBot
         
         public void CalcTurn()
         {
-        //    BotState.GetInstance().CalcTurn();
+            CalcFront();
         }
 
         private void CalcFront()
         {
-            BaseRegions RegionsMe = new BaseRegions(Map.GetInstance().RWhere(PLAYER.ME));
-            BaseRegions RegionsFront = new BaseRegions(Map.GetInstance().Regions.Where(R => R.Player == PLAYER.ME && R.Neighbours.Any(N => N.Player != PLAYER.ME)).ToList());
-            BaseRegions RegionsInland = new BaseRegions(RegionsMe.Regions.Except(RegionsFront.Regions).ToList());
+            RegionsMe = new BaseRegions(Map.GetInstance().RWhere(PLAYER.ME));
+            RegionsFront = new BaseRegions(Map.GetInstance().Regions.Where(R => R.Player == PLAYER.ME && R.Neighbours.Any(N => N.Player != PLAYER.ME)).ToList());
+            RegionsInland = new BaseRegions(RegionsMe.Regions.Except(RegionsFront.Regions).ToList());
 
             // Reset all Regions
             Map.GetInstance().Regions.ForEach(R => { R.IsFront = false; R.FrontDistance = 0; });
