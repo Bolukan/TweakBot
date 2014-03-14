@@ -177,8 +177,10 @@ namespace TweakBot
 
         static public void MoveAwayFromInland()
         {
-            Map.GetInstance().RegionsInland.Regions.Where(R => R.Armies > 1).ToList().ForEach(R =>
-                AddAttackTransfer(R, R.Neighbours.Where(N => N.FrontDistance < R.FrontDistance).First(), R.Armies - 1));
+            List<Region> MoveThese = Map.GetInstance().RegionsInland.Regions.Where(R => R.Armies > 1).ToList();
+            if (MoveThese.Count > 0)
+            MoveThese.ForEach(R =>
+                AddAttackTransfer(R, R.Neighbours.Where(N => N.FrontDistance < R.FrontDistance).FirstOrDefault(), R.Armies - 1));
         }
 
         static public List<Path> AllPathMeToOther()
