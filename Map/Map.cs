@@ -159,12 +159,15 @@ namespace TweakBot
             // Reset all Regions
             Map.GetInstance().Regions.ForEach(R => { R.IsFront = false; R.FrontDistance = 0; });
             // Set Front on True and 1
-            RegionsFront.Regions.ForEach(R => { R.IsFront = true; R.FrontDistance = 1; } );
+            if (RegionsFront.Regions.Count > 0)
+                RegionsFront.Regions.ForEach(R => { R.IsFront = true; R.FrontDistance = 1; } );
 
             List<Region> RegionsOpen = RegionsInland.Regions;
             while (RegionsOpen.Count > 0)
             {
-                RegionsOpen.Where(R => R.Neighbours.Any(N => N.FrontDistance > 0)).ToList().ForEach(R => R.FrontDistance = R.Neighbours.Max(N => N.FrontDistance) + 1);
+                List<Region> Temp = RegionsOpen.Where(R => R.Neighbours.Any(N => N.FrontDistance > 0)).ToList();
+                if (Temp.Count > 0)
+                   Temp.ForEach(R => R.FrontDistance = R.Neighbours.Max(N => N.FrontDistance) + 1);
                 RegionsOpen = RegionsOpen.Where(R => R.FrontDistance == 0).ToList();
             }
 

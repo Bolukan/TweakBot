@@ -69,7 +69,7 @@ namespace TweakBot
             List<SuperRegion> sr_MIXED = Map.GetInstance().SuperRegions.Where(sr => (sr.TurnTactics == 2 || sr.TurnTactics == 3)).ToList();
             if (sr_MIXED.Count == 0) return;
 
-            SuperRegion sr_BEST = sr_MIXED.OrderBy(sr => (sr.RCount(PLAYER.NOT_ME))).First();
+            SuperRegion sr_BEST = sr_MIXED.OrderByDescending(sr => (sr.RCount(PLAYER.NOT_ME))).First();
 
             AddPlaceArmies(BestTarget(sr_BEST), BotState.GetInstance().StartingArmies);
         }
@@ -81,6 +81,7 @@ namespace TweakBot
             
             Commands = new List<String>();
             PlaceArmiesOnMIXED();
+
             if (BotState.GetInstance().StartingArmies > 0)
             {
                 List<Region> NewRegion = Map.GetInstance().RWhere(PLAYER.ME).OrderByDescending(R => R.Neighbours.Count(N => N.Player == PLAYER.OTHER)).ToList();
