@@ -72,7 +72,8 @@ namespace TweakBot
                     break;
 
                 case "pick_starting_regions":
-                    Map.GetInstance().CalculateMap();
+                    Map.GetInstance().CalculateInitial();
+
                     int[] regionsoffered = parts.Skip(2).Select(p => int.Parse(p)).ToArray();
                     int[] fav = Map.GetFavorites().Intersect(regionsoffered).ToArray();
                     Console.WriteLine(string.Join(" ", fav.Take(6).Select(x => x.ToString()).ToArray()));

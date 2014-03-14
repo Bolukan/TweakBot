@@ -8,8 +8,8 @@ namespace TweakBot
     {
         // final
         private int id;
-        private List<Region> neighbours;
         private SuperRegion superRegion;
+        private BaseRegions neighbours;
         
         // round specific
         private int armies;
@@ -26,13 +26,13 @@ namespace TweakBot
         {
             this.id = id;
             this.superRegion = superRegion;
-            this.neighbours = new List<Region>();
+            this.neighbours = new BaseRegions();
             //
         }
 
         public void AddNeighbour(Region neighbour)
         {
-            neighbours.Add(neighbour);
+            neighbours.AddRegion(neighbour);
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace TweakBot
 
         public List<Region> Neighbours
         {
-            get { return neighbours; }
+            get { return neighbours.Regions; }
         }
 
         public SuperRegion GetSuperRegion
@@ -93,31 +93,33 @@ namespace TweakBot
 
         #endregion
 
-        #region Player
+        //#region Player
 
-        public bool IsPlayerUnknown()
+        //public bool IsPlayerUnknown()
+        //{
+        //    return player == PLAYER.UNKNOWN;
+        //}
+
+        //public bool IsPlayerNeutral()
+        //{
+        //    return player == PLAYER.NEUTRAL;
+        //}
+
+        //public bool IsPlayerMy()
+        //{
+        //    return player == PLAYER.ME;
+        //}
+
+        //public bool IsPlayerOther()
+        //{
+        //    return player == PLAYER.OTHER;
+        //}
+
+        //#endregion
+
+        public void CalculateInitial()
         {
-            return player == PLAYER.UNKNOWN;
         }
-
-        public bool IsPlayerNeutral()
-        {
-            return player == PLAYER.NEUTRAL;
-        }
-
-        public bool IsPlayerMy()
-        {
-            return player == PLAYER.ME;
-        }
-
-        public bool IsPlayerOther()
-        {
-            return player == PLAYER.OTHER;
-        }
-
-        #endregion
-
-
  
     }
 }

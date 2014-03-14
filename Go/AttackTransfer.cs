@@ -3,7 +3,7 @@ using System.Text;
 
 namespace TweakBot
 {
-    public class AttackTransfer
+    class AttackTransfer
     {
         public int Armies { get; set; }
         public Region SourceRegion { get; set; }
@@ -11,12 +11,12 @@ namespace TweakBot
     
         public AttackTransfer(int armies, Region sourceRegion, Region targetRegion)
         {
-            Armies = armies;
-            SourceRegion = sourceRegion;
-            TargetRegion = targetRegion;
+            this.Armies = armies;
+            this.SourceRegion = sourceRegion;
+            this.TargetRegion = targetRegion;
         }
 
-        public String ToString()
+        public override String ToString()
         {
             return String.Format("{0} attack/transfer {1} {2} {3}", PLAYER.NameMe, SourceRegion.Id, TargetRegion.Id, Armies);
         }

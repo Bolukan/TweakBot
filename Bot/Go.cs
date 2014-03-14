@@ -187,7 +187,7 @@ namespace TweakBot
 
         static public List<Path> AllPathMeToOther()
         {
-            return Map.GetInstance().Paths.Where(P => P.RegionFrom.IsPlayerMy() && P.RegionTo.IsPlayerOther()).OrderByDescending(P => P.RegionFrom.Armies).OrderByDescending(P => P.RegionTo.Armies).ToList();
+            return Map.GetInstance().Paths.Where(P => P.RegionFrom.Player == PLAYER.ME && P.RegionTo.Player == PLAYER.OTHER).OrderByDescending(P => P.RegionFrom.Armies).OrderByDescending(P => P.RegionTo.Armies).ToList();
         }
 
 

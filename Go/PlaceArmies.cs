@@ -3,7 +3,7 @@ using System.Text;
 
 namespace TweakBot
 {
-    public class PlaceArmies
+    class PlaceArmies
     {
         public int Armies { get; set; }
         public Region Region { get; set; }
@@ -14,7 +14,7 @@ namespace TweakBot
             Region = region;
         }
 
-        public String ToString()
+        public override String ToString()
         {
             return String.Format("{0} place_armies {1} {2}", PLAYER.NameMe, Region.Id, Armies);
         }

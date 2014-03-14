@@ -10,7 +10,7 @@ namespace TweakBot
         private int armiesReward;
 
         // Extra statistics
-        private List<Region> neighbours; // neighbours from regions but not own regions
+        // private List<Region> neighbours; // neighbours from regions but not own regions
 
         public int TurnTactics { get; set; }
 
@@ -45,25 +45,25 @@ namespace TweakBot
         /// <summary>
         /// initialise calculations!
         /// </summary>
-        public void Calculate()
+        public void CalculateInitial()
         {
-            CalcNeighbours();
+            // CalcNeighbours();
         }
         
-        private void CalcNeighbours()
-        {
+//        private void CalcNeighbours()
+//        {
             // get all neighbours of regions of superregion
-            List<Region> AllNeighbours = regions.SelectMany(r => r.Neighbours).ToList();
+            // List<Region> AllNeighbours = regions.SelectMany(r => r.Neighbours).ToList();
             // get all neighbours of superregion
-            neighbours = AllNeighbours.Distinct().Except(regions).ToList();
-        }
+            // neighbours = AllNeighbours.Distinct().Except(regions).ToList();
+//        }
 
         #endregion
 
-        public List<Region> Neighbours()
-        {
-            return neighbours;
-        }
+        //public List<Region> Neighbours()
+        //{
+        //    return neighbours;
+        //}
 
 //        public int CountRegions
 //        {

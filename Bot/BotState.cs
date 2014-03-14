@@ -76,8 +76,8 @@ namespace TweakBot
         public void CalcTurn()
         {
             Map myMap = Map.GetInstance();
-            myRegions = myMap.Regions.FindAll(R => R.IsPlayerMy());
-            otherRegions = myMap.Regions.FindAll(R => R.IsPlayerOther());
+            myRegions = myMap.Regions.FindAll(R => R.Player == PLAYER.ME);
+            otherRegions = myMap.Regions.FindAll(R => R.Player == PLAYER.OTHER);
         }
 
         public List<Region> MyRegions()

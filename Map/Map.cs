@@ -99,16 +99,19 @@ namespace TweakBot
 
         public List<Path> PathsFromMe()
         {
-            return paths.Where(p => p.RegionFrom.IsPlayerMy()).ToList();
+            return paths.Where(p => p.RegionFrom.Player == PLAYER.ME).ToList();
         }
 
         #endregion
         
         // calculate further map statistics
-        public void CalculateMap()
+        public void CalculateInitial()
         {
             foreach (SuperRegion superRegion in superRegions)
-                superRegion.Calculate();
+                superRegion.CalculateInitial();
+
+            foreach (Region region in regions)
+                region.CalculateInitial();
         }
         
         /// <summary>
