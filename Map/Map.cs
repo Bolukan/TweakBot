@@ -160,7 +160,7 @@ namespace TweakBot
             List<Region> RegionsOpen = RegionsInland.Regions;
             while (RegionsOpen.Count > 0)
             {
-                RegionsOpen.ForEach(R => R.FrontDistance = R.Neighbours.Max(N => N.FrontDistance) + 1);
+                RegionsOpen.Where(R => R.Neighbours.Any(N => N.FrontDistance > 0)).ToList().ForEach(R => R.FrontDistance = R.Neighbours.Max(N => N.FrontDistance) + 1);
                 RegionsOpen = RegionsOpen.Where(R => R.FrontDistance == 0).ToList();
             }
 
