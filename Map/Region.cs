@@ -30,6 +30,8 @@ namespace TweakBot
             this.id = id;
             this.superRegion = superRegion;
             this.neighbours = new BaseRegions();
+            player = PLAYER.UNKNOWN;
+            armies = 2;
         }
 
         /// <summary>
