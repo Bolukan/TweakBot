@@ -24,12 +24,7 @@ namespace TweakBot
         public BaseRegions(List<Region> regions)
         {
             // initialise
-            this.regions = new List<Region>();
-            // eliminate double entries
-            foreach (Region region in regions)
-            {
-                AddRegion(region);
-            }
+            this.regions = regions.Distinct().ToList();
         }
 
         /// <summary>

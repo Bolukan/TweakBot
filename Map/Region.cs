@@ -14,6 +14,9 @@ namespace TweakBot
         // round specific
         private int armies;
         private int player;
+        // analyse
+        public bool IsFront { get; set; }
+        public int FrontDistance { get; set; }
 
         #region initial values
 

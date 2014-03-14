@@ -146,5 +146,24 @@ namespace TweakBot
         //    BotState.GetInstance().CalcTurn();
         }
 
+        private void CalcFront()
+        {
+            BaseRegions RegionsMe = new BaseRegions(Map.GetInstance().RWhere(PLAYER.ME));
+            BaseRegions RegionsFront = new BaseRegions(Map.GetInstance().Regions.Where(R => R.Player == PLAYER.ME && R.Neighbours.Any(N => N.Player != PLAYER.ME)).ToList());
+            BaseRegions RegionsInland = new BaseRegions(RegionsMe.Regions.Except(RegionsFront.Regions).ToList());
+
+            // Reset all Regions
+            Map.GetInstance().Regions.ForEach(R => { R.IsFront = false; R.FrontDistance = 0; });
+            // Set Front on True and 1
+            RegionsFront.Regions.ForEach(R => { R.IsFront = true; R.FrontDistance = 1; } );
+
+            List<Region> RegionsOpen = RegionsInland.Regions;
+            while (RegionsOpen.Count > 0)
+            {
+                RegionsOpen.ForEach(R => R.FrontDistance = R.Neighbours.Max(N => N.FrontDistance) + 1);
+                RegionsOpen = RegionsOpen.Where(R => R.FrontDistance == 0).ToList();
+            }
+
+        }
     }
 }
