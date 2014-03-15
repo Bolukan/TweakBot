@@ -3,6 +3,39 @@ using System.Collections.Generic;
 
 namespace TweakBot
 {
+  
+    class FiniteStateMachine
+    {
+        struct GameState
+        {
+            bool DoPlaceArmies;
+            int[] Regions;
+        
+            public GameState(bool placeArmies, int[] regions) 
+            {   
+                DoPlaceArmies = placeArmies;
+                Regions = regions;
+            }
+        
+            public override string ToString()
+            {
+                return String.Concat(DoPlaceArmies ? "P":"M", Regions);
+            }
+        }
+
+        public Dictionary<GameState, double> states;
+        
+        public FiniteStateMachine()
+        { 
+            states = new Dictionary<GameState, double>();
+            // -2 = neutral, 2 = ME, Chance=100 = 100% 
+            states.Add(new GameState(true, new int[] { -2, 2, -2 }), 100);
+        }
+
+    }
+    
+    
+    
     class Tools
     {
         /// <summary>
