@@ -8,13 +8,15 @@ namespace TweakBot
     {
         public struct GameState
         {
-            bool DoPlaceArmies;
-            int[] Regions;
+            public bool DoPlaceArmies;
+            public int[] Regions;
+            public double Chance;
         
-            public GameState(bool placeArmies, int[] regions) 
+            public GameState(bool placeArmies, int[] regions, double chance) 
             {   
                 DoPlaceArmies = placeArmies;
                 Regions = regions;
+                Chance = chance;
             }
         
             public override string ToString()
@@ -47,9 +49,38 @@ namespace TweakBot
         
         public FiniteStateMachine()
         { 
-            states = new Dictionary<GameState, double>();
+            List<GameState> states = new List<GameState>();
             // -2 = neutral, 2 = ME, Chance=100 = 100% 
-            states.Add(new GameState(true, new int[] { -2, 2, -2 }), 100);
+            states.Add(new GameState(true, new int[] { -2, 2, -2 }, 100));
+
+            foreach (GameState state in states)
+            {
+                if (state.DoPlaceArmies)
+                {
+                    // 1 tactic : place on mid spot
+                    states.Add(new GameState(false, new int[] { state.Regions[0], state.Regions[1] + 5, state.Regions[2] }, state.Chance));
+                }
+                else
+                {
+                    // end state if none is neutral
+                    if (state.Regions[0] < 0 || state.Regions[2] < 0)
+                    {
+                        
+                        // no move
+                        if (state.Regions[1] < 4) 
+                        {
+                            states.Add(new GameState(true, new int[] { state.Regions[0], state.Regions[1], state.Regions[2] }, state.Chance));
+                        } 
+                        // attack 1
+                        if (state.Regions[1] < 7)
+                        {
+
+                        }
+                    }
+                }
+            }
+
+
         }
 
         public BattleOutcome[] CalculateBattleOutcome(int ArmiesAttack, int ArmiesDefend)
