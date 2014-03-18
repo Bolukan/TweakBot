@@ -64,7 +64,12 @@ namespace TweakBot
         {
             get { return neighbours.Regions; }
         }
-
+/*
+        public BaseRegions Neighbours
+        {
+            get { return neighbours; }
+        }
+*/
         #endregion
 
         #region Initial Calculations

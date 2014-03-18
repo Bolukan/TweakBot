@@ -10,20 +10,18 @@ namespace TweakBot
         {
             public bool DoPlaceArmies;
             public int[] Regions;
-            public double Chance;
-        
-            public GameState(bool placeArmies, int[] regions, double chance) 
+                    
+            public GameState(bool placeArmies, int[] regions) 
             {   
                 DoPlaceArmies = placeArmies;
                 Regions = regions;
-                Chance = chance;
             }
         
             public override string ToString()
             {
                 return String.Concat(DoPlaceArmies ? "P":"M", Regions);
             }
-        }
+        } // struct
 
         public struct BattleOutcome
         {
@@ -43,36 +41,47 @@ namespace TweakBot
                 return String.Format("{0}/{1} {2:N6}", DefendLoss, AttackLoss, Chance);
             }
 
-        }
+        } // struct
 
         public Dictionary<GameState, double> states;
-        
+
+        private void AddChanceToState(GameState state, double addChance)
+        {
+            if (states.ContainsKey(state))
+            {
+                states[state] = states[state] + addChance;
+            }
+            else
+            {
+                states.Add(state, addChance);
+            }
+        }
+
         public FiniteStateMachine()
         { 
-            List<GameState> states = new List<GameState>();
+            states = new Dictionary<GameState, double>();
             // -2 = neutral, 2 = ME, Chance=100 = 100% 
-            states.Add(new GameState(true, new int[] { -2, 2, -2 }, 100));
+            states.Add(new GameState(true, new int[] { -2, 2, -2 }),100);
 
-            foreach (GameState state in states)
+            foreach (KeyValuePair<GameState, double> state in states)
             {
-                if (state.DoPlaceArmies)
+                if (state.Key.DoPlaceArmies)
                 {
                     // 1 tactic : place on mid spot
-                    states.Add(new GameState(false, new int[] { state.Regions[0], state.Regions[1] + 5, state.Regions[2] }, state.Chance));
+                    AddChanceToState(new GameState(false, new int[] { state.Key.Regions[0], state.Key.Regions[1] + 5, state.Key.Regions[2] }), state.Value);
                 }
                 else
                 {
                     // end state if none is neutral
-                    if (state.Regions[0] < 0 || state.Regions[2] < 0)
+                    if (state.Key.Regions[0] < 0 || state.Key.Regions[2] < 0)
                     {
-                        
                         // no move
-                        if (state.Regions[1] < 4) 
+                        if (state.Key.Regions[1] < 4) 
                         {
-                            states.Add(new GameState(true, new int[] { state.Regions[0], state.Regions[1], state.Regions[2] }, state.Chance));
+                            AddChanceToState(new GameState(true, new int[] { state.Key.Regions[0], state.Key.Regions[1], state.Key.Regions[2] }), state.Value);
                         } 
                         // attack 1
-                        if (state.Regions[1] < 7)
+                        if (state.Key.Regions[1] < 7)
                         {
 
                         }

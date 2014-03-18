@@ -39,9 +39,8 @@ namespace TweakBot
                 }
                 Console.ReadLine();
                
-
-
                 // EINDE TEST
+                
                 String line = Console.ReadLine().Trim();
                 Regex.Replace(line, "\\s+", " "); // replace multiple spaces for 1 space
 

@@ -157,18 +157,20 @@ namespace TweakBot
             RegionsInland = new BaseRegions(RegionsMe.Regions.Except(RegionsFront.Regions).ToList());
 
             // Reset all Regions
-            Map.GetInstance().Regions.ForEach(R => { R.IsFront = false; R.FrontDistance = 0; });
+            Map.GetInstance().Regions.ForEach(R => { R.IsFront = false; R.FrontDistance = 99; });
             // Set Front on True and 1
             if (RegionsFront.Regions.Count > 0)
                 RegionsFront.Regions.ForEach(R => { R.IsFront = true; R.FrontDistance = 1; } );
 
+
+            // RegionsOpen: Regions belonging to Me without route to front
             List<Region> RegionsOpen = RegionsInland.Regions;
             while (RegionsOpen.Count > 0)
             {
-                List<Region> Temp = RegionsOpen.Where(R => R.Neighbours.Any(N => N.FrontDistance > 0)).ToList();
+                List<Region> Temp = RegionsOpen.Where(R => R.Neighbours.Any(N => N.FrontDistance < 99)).ToList();
                 if (Temp.Count > 0)
-                   Temp.ForEach(R => R.FrontDistance = R.Neighbours.Max(N => N.FrontDistance) + 1);
-                RegionsOpen = RegionsOpen.Where(R => R.FrontDistance == 0).ToList();
+                   Temp.ForEach(R => R.FrontDistance = R.Neighbours.Min(N => N.FrontDistance) + 1);
+                RegionsOpen = RegionsOpen.Where(R => R.FrontDistance == 99).ToList();
             }
 
         }
