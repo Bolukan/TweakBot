@@ -63,7 +63,7 @@
     <Compile Include="Bot\BotParser.cs" />
     <Compile Include="Bot\BotState.cs" />
     <Compile Include="Go\Go.cs" />
-    <Compile Include="Bot\Tools.cs" />
+    <Compile Include="Simulation\BattleOutcome.cs" />
     <Compile Include="Bot\Opponent_moves.cs" />
     <Compile Include="Bot\Random.cs" />
     <Compile Include="Go\AttackTransfer.cs" />
@@ -81,6 +81,7 @@
     <Compile Include="Map\Region.cs" />
     <Compile Include="Map\SuperRegion.cs" />
     <Compile Include="Bot\TweakBot.cs" />
+    <Compile Include="Simulation\BattleOutcomes.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

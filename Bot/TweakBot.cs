@@ -25,21 +25,6 @@ namespace TweakBot
             while (true)
             {
                 // Test();
-                // BEGIN TEST
-                FiniteStateMachine FSM = new FiniteStateMachine();
-                FiniteStateMachine.BattleOutcome[] test = FSM.CalculateBattleOutcome(2, 2);
-
-                for (int i = 0; i <= 2; i++)
-                {
-                    for (int j = 0; j <= 2; j++)
-                    {
-                        Console.Write(test[i*3+j] + "  ");
-                    }
-                    Console.WriteLine();
-                }
-                Console.ReadLine();
-               
-                // EINDE TEST
                 
                 String line = Console.ReadLine().Trim();
                 Regex.Replace(line, "\\s+", " "); // replace multiple spaces for 1 space
